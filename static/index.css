@@ -1,17 +1,41 @@
 body{
     margin-top:20px;
-    backgroundColor:#eee;
+
 }
 .home-5-bg {
-    background: #1E90FF;
+    background: #6eb9d7;
     position: relative;
     background-size: cover;
     height: 50vh;
     background-position: center center;
 }
 
+/* Add overlay color */
+.home-5-bg::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(18, 246, 223, 0.5); /* Adjust alpha value to control the opacity */
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  #particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
 .section {
     position: relative;
+    height: 100%;
 }
 
 .home-5-content {
@@ -46,7 +70,7 @@ body{
 }
 
 .text-white-70 {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(179, 8, 232, 0.549);
 }
 
 .f-15 {

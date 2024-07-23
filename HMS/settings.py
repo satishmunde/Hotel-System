@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +26,8 @@ SECRET_KEY = "django-insecure-=w3^*2o3vme!qefs81%1osr%q39yv13i1o3!^*t2z8y8k)-u=m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 # Application definition
@@ -39,12 +41,15 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "api",
     "Billing",
-    "Developers",
+  
+    "Token_System",
+    'corsheaders',
     "ERP",
     "Menu",
     "Orders",
     "Owners",
-    'drf_spectacular',
+    'drf_yasg',
+    'core',
     'rest_framework', 
 ]
 
@@ -56,6 +61,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = "HMS.urls"
@@ -85,7 +91,7 @@ WSGI_APPLICATION = "HMS.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Super_Admin',
+        'NAME': 'hotel_system',
         'USER': 'postgres',
         'PASSWORD': 'Admin',
         'HOST': 'localhost',
@@ -140,3 +146,59 @@ STATICFILES_DIRS = [BASE_DIR,'static']
 
 MEDIA_ROOT = BASE_DIR/'media'
 MEDIA_URL = "/media/"
+
+
+REST_FRAMEWORK = {
+    'CORE_DECIMAL_TO_STRING':False,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    
+    ),
+}
+
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT',),
+
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=2),
+} 
+
+DJOSER = {
+    'SERIALIZERS':{ 
+        'user_create':'core.serializers.UserCreateSerializer',
+        'current_user':'core.serializers.UserSerializer'
+    }
+
+}
+
+
+
+AUTH_USER_MODEL ='core.LoginSystem'
+
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1",
+    "http://127.0.0.1:64120",
+]
+
+
+
+SWAGGER_SETTINGS = {
+    
+    'VALIDATOR_URL': 'http://127.0.0.1:8000',
+    'SECURITY_DEFINITIONS': {
+        'basic': {
+            'type': 'basic'
+        }
+    },
+
+}
+
+REDOC_SETTINGS = {
+   'LAZY_RENDERING': False,
+
+}
