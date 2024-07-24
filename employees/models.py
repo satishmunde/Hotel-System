@@ -6,7 +6,17 @@ class Department(models.Model):
     def __str__(self):
         return self.name
 
+
+
+def generate_emp_id():
+    latest_emp = Employee.objects.order_by('emp_id').last()
+    if latest_emp:
+        latest_number = int(latest_emp.emp_id[3:]) + 1
+    else:
+        latest_number = 1
+    return f"EMP{latest_number:07}"
 class Employee(models.Model):
+    emp_id = models.CharField(primary_key=True, max_length=10,default=generate_emp_id)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     
@@ -15,15 +25,15 @@ class Employee(models.Model):
     hire_date = models.DateField()
     is_active = models.BooleanField(default=True)
    
-    address = models.CharField(max_length=255, blank=True, null=True)
-    birth_date = models.DateField(blank=True, null=True)
+    address = models.CharField(max_length=255, )
+    birth_date = models.DateField()
     
     # Additional fields
-    aadhar_number = models.CharField(max_length=20, blank=True, null=True)
-    pan_number = models.CharField(max_length=20, blank=True, null=True)
-    bank_name = models.CharField(max_length=100, blank=True, null=True)
-    bank_account_number = models.CharField(max_length=50, blank=True, null=True)
-    bank_ifsc_code = models.CharField(max_length=20, blank=True, null=True)
+    aadhar_number = models.CharField(max_length=20, )
+    pan_number = models.CharField(max_length=20, )
+    bank_name = models.CharField(max_length=100, )
+    bank_account_number = models.CharField(max_length=50, )
+    bank_ifsc_code = models.CharField(max_length=20, )
     
     is_doc_uploaded = models.BooleanField(default=False)
     
@@ -49,9 +59,9 @@ class Position(models.Model):
         return self.title
 
 class EmployeePosition(models.Model):
-    employee = models.ForeignKey(Employee, on_delete=models.SET_DEFAULT ,default='No Position')
-    department = models.ForeignKey(Department, on_delete=models.SET_DEFAULT ,default='No Position')
-    position = models.ForeignKey(Position, on_delete=models.SET_DEFAULT ,default='No Position')
+    employee = models.ForeignKey(Employee, on_delete=models.SET_DEFAULT ,default=-1)
+    department = models.ForeignKey(Department, on_delete=models.SET_DEFAULT ,default=-1)
+    position = models.ForeignKey(Position, on_delete=models.SET_DEFAULT ,default=-1)
     start_date = models.DateField()
     end_date = models.DateField(null=True, blank=True)
 

@@ -9,19 +9,17 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('Orders', '0001_initial'),
+        ('employees', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Token',
+            name='Identity_Card',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('token_number', models.CharField(max_length=50, unique=True)),
-                ('is_active', models.BooleanField(default=True)),
+                ('card_pdf', models.FileField(upload_to='id_cards/')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('order', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='token', to='Orders.order')),
+                ('employee', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='employees.employee')),
             ],
         ),
     ]
