@@ -55,59 +55,63 @@ class DocumentSerializer(serializers.ModelSerializer):
 
 class EmployeeSerializer(serializers.ModelSerializer):
     documents = DocumentSerializer(many=True, read_only=True)  
+    
     def validate(self, data):
+        # Check if each field exists in validated_data before validating
+        if 'first_name' in data and not re.match(r'^[a-zA-Z]+$', data['first_name']):
+            raise serializers.ValidationError("First Name should contain only alphabets.")
+        
+        if 'last_name' in data and not re.match(r'^[a-zA-Z]+$', data['last_name']):
+            raise serializers.ValidationError("Last Name should contain only alphabets.")
+        
+        if 'phone_number' in data and len(data['phone_number']) != 10:
+            raise serializers.ValidationError("Please enter a valid 10-digit phone number.")
+        
+        if 'aadhar_number' in data and len(data['aadhar_number']) != 12:
+            raise serializers.ValidationError("Please enter a valid 12-digit Aadhar number.")
 
+        if 'address' in data and not re.match(r'^[a-zA-Z,. ]+$', data['address']):
+            raise serializers.ValidationError("Address should not contain any special characters.")
         
-
-        if not re.match(r'^[a-zA-Z]+$', data['first_name'] ):
-            raise serializers.ValidationError("First Name Contains Only Alfabate")
+        if 'birth_date' in data:
+            today = date.today()
+            birth_date = data['birth_date']
+            age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
+            if age < 18:
+                raise serializers.ValidationError("Employee must be 18 years or older.")
         
-        if not re.match(r'^[a-zA-Z]+$', data['last_name'] ):
-            raise serializers.ValidationError("Last Name Contains Only Alfabate")
+        if 'bank_name' in data and not re.match(r'^[a-zA-Z ]+$', data['bank_name']):
+            raise serializers.ValidationError("Bank Name should contain only alphabets.")
         
-        if not len(data['phone_number']) == 10:
-            raise serializers.ValidationError("Please Enter Valid Phone Number")
-
-        if not re.match(r'^[a-zA-Z,. ]+$',data['address']):
-            raise serializers.ValidationError("Address Should not Contains Any Special Character")
+        if 'pan_number' in data:
+            pan_regex = r'^[A-Z]{5}[0-9]{4}[A-Z]{1}$'
+            if not re.match(pan_regex, data['pan_number']):
+                raise serializers.ValidationError("Invalid PAN number format.")
         
+        if 'bank_ifsc_code' in data:
+            ifsc_regex = r'^[A-Z]{4}0[A-Z0-9]{6}$'
+            if not re.match(ifsc_regex, data['bank_ifsc_code']):
+                raise serializers.ValidationError("Invalid IFSC code format.")
         
-        
-        
-        today = date.today()
-        birth_date = data['birth_date']
-
-        age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
-        if age < 18:
-            raise serializers.ValidationError("Employee must be 18 years or older.")
-                
-        if not re.match(r'^[a-zA-Z]+$', data['bank_name'] ):
-            raise serializers.ValidationError("Bank Name Contains Only Alfabate")
-        
-        pan_regex = r'^[A-Z]{5}[0-9]{4}[A-Z]{1}$'
-        if not re.match(pan_regex, data['pan_number']):
-            raise serializers.ValidationError("Invalid PAN number format.")
-        
-        
-        ifsc_regex = r'^[A-Z]{4}0[A-Z0-9]{6}$'
-        if not re.match(ifsc_regex, data['bank_ifsc_code']):
-            raise serializers.ValidationError("Invalid IFSC code format.")
-        
-
         return data
     
-    
     def update(self, instance, validated_data):
+        # Ensure emp_id is not overwritten
+        validated_data.pop('emp_id', None)
 
-        validated_data['member_id']= instance.member_id
+        # Update each field if present in validated_data
         for field, value in validated_data.items():
             setattr(instance, field, value)
+        
+        # Save the instance to persist the changes
         instance.save()
+        
         return instance
 
     class Meta:
         model = Employee
         fields = '__all__'
+        read_only_fields = ['emp_id']  # Assuming emp_id should not be updated
 
 class PositionSerializer(serializers.ModelSerializer):
     def validate(self, data):

@@ -15,6 +15,7 @@ def generate_emp_id():
     else:
         latest_number = 1
     return f"EMP{latest_number:07}"
+
 class Employee(models.Model):
     emp_id = models.CharField(primary_key=True, max_length=10,default=generate_emp_id)
     first_name = models.CharField(max_length=100)
