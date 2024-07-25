@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "employees",
     'drf_yasg',
     'core',
+    "crm",
     'rest_framework', 
 ]
 

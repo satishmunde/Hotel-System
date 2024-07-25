@@ -51,6 +51,7 @@ urlpatterns = [
     path("", views.home),
     path('orders/', include('Orders.urls')),
     path('employees/', include('employees.urls')),
+    path('crm/', include('crm.urls')),
 
     path('token/', include('Token_System.urls')),
     path('auth/', include('djoser.urls')),

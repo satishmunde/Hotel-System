@@ -1,5 +1,5 @@
 from django.db import models
-# from Token_System.models import Token  # Adjust the import path as per your app structure
+from crm.models import Customer
 
 class Order(models.Model):
     STATUS_CHOICES = [
@@ -9,7 +9,7 @@ class Order(models.Model):
         # Add more statuses as needed
     ]
 
-    customer_name = models.CharField(max_length=100)
+    customer_name = models.ForeignKey(Customer, max_length=100 , on_delete=models.CASCADE)
     items = models.TextField()  
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
@@ -25,3 +25,7 @@ class Order(models.Model):
     def delete(self, *args, **kwargs):
         self.is_active = False
         self.save()
+        
+        class Meta:
+            verbose_name = 'Order'
+            verbose_name_plural = 'Orders'
