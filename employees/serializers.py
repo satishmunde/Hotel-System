@@ -116,23 +116,18 @@ class EmployeeSerializer(serializers.ModelSerializer):
 class PositionSerializer(serializers.ModelSerializer):
     def validate(self, data):
 
-        if not Position.objects.filter(pk=data['gym'].gym_id).exists():
-            raise serializers.ValidationError("Invalid gym ID")
+        if  Position.objects.filter(name=data['name']).exists():
+            raise serializers.ValidationError(" Position is Already Exitst")
 
-        if data['member_age'] <= 16:
-            raise serializers.ValidationError("Age must be a Greater than 16")
-        
         return data
     
-    
     def update(self, instance, validated_data):
-
-        validated_data['member_id']= instance.member_id
-            
+  
         for field, value in validated_data.items():
             setattr(instance, field, value)
         instance.save()
         return instance
+    
     class Meta:
         model = Position
         fields = '__all__'

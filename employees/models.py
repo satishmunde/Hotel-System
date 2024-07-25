@@ -54,7 +54,7 @@ class Document(models.Model):
 
 
 class Position(models.Model):
-    title = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.title
@@ -67,7 +67,7 @@ class EmployeePosition(models.Model):
     end_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.employee} - {self.position}"
+        return f"{self.employee} - {self.position} - {self.department}"
 
 
 class RequiredDocument(models.Model):
