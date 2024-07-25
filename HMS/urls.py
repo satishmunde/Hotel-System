@@ -52,7 +52,7 @@ urlpatterns = [
     path('orders/', include('Orders.urls')),
     path('employees/', include('employees.urls')),
     path('crm/', include('crm.urls')),
-
+    path('id_generator/', include('id_generator.urls')),    
     path('token/', include('Token_System.urls')),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
