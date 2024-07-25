@@ -6,3 +6,4 @@ class IDCardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Identity_Card
         fields = '__all__'
+        read_only_fields = ['is_active'] 

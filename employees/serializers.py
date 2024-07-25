@@ -31,6 +31,7 @@ class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Department
         fields = '__all__'
+        read_only_fields = ['dept_id' ,'is_active'] 
 
 class DocumentSerializer(serializers.ModelSerializer):
     
@@ -52,6 +53,7 @@ class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Document
         fields = '__all__'
+        read_only_fields = ['is_active'] 
 
 class EmployeeSerializer(serializers.ModelSerializer):
     documents = DocumentSerializer(many=True, read_only=True)  
@@ -111,7 +113,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
         fields = '__all__'
-        read_only_fields = ['emp_id']  # Assuming emp_id should not be updated
+        read_only_fields = ['emp_id','is_active']  
 
 class PositionSerializer(serializers.ModelSerializer):
     def validate(self, data):
@@ -131,21 +133,22 @@ class PositionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Position
         fields = '__all__'
+        read_only_fields = ['is_active'] 
 
 class EmployeePositionSerializer(serializers.ModelSerializer):
     def validate(self, data):
-        if not EmployeePosition.objects.filter(pk=data['gym'].gym_id).exists():
-            raise serializers.ValidationError("Invalid gym ID")
+        # if not EmployeePosition.objects.filter(pk=data['gym'].gym_id).exists():
+        #     raise serializers.ValidationError("Invalid gym ID")
 
-        if data['member_age'] <= 16:
-            raise serializers.ValidationError("Age must be a Greater than 16")
+        # if data['member_age'] <= 16:
+        #     raise serializers.ValidationError("Age must be a Greater than 16")
         
         return data
     
     
     def update(self, instance, validated_data):
 
-        validated_data['member_id']= instance.member_id
+        # validated_data['member_id']= instance.member_id
     
         for field, value in validated_data.items():
             setattr(instance, field, value)
@@ -154,6 +157,7 @@ class EmployeePositionSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmployeePosition
         fields = '__all__'
+        read_only_fields = ['is_active'] 
 
 class RequireDocumentsSerializer(serializers.ModelSerializer):
     def validate(self, data):
@@ -173,4 +177,4 @@ class RequireDocumentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = RequiredDocument
         fields = '__all__'
-
+        read_only_fields = ['is_active'] 

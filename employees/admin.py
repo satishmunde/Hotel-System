@@ -22,4 +22,4 @@ class PositionAdmin(admin.ModelAdmin):
 class EmployeePositionAdmin(admin.ModelAdmin):
     list_display = ('employee', 'department', 'position', 'start_date', 'end_date')
     list_filter = ('department', 'position', 'start_date', 'end_date')
-    search_fields = ('employee__first_name', 'employee__last_name', 'position__title')
+    search_fields = ('employee__first_name', 'employee__last_name', 'position__name')

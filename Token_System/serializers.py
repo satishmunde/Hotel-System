@@ -6,3 +6,4 @@ class TokenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Token
         fields = '__all__'
+        read_only_fields = ['is_complated'] 
