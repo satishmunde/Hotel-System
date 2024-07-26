@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'core',
     "api",
     "Billing",
     "id_generator",
@@ -49,7 +50,7 @@ INSTALLED_APPS = [
     "Orders",
     "employees",
     'drf_yasg',
-    'core',
+
     "crm",
     'rest_framework', 
 ]

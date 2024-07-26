@@ -1,8 +1,10 @@
 from django.db import models
-from employees.models import Employee  # Adjust the import path as per your app structure
+
+from django.conf import settings
+
 
 class Identity_Card(models.Model):
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    employee = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     card_pdf = models.FileField(upload_to='id_cards/')
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)

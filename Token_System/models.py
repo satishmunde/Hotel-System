@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from Orders.models import Order
@@ -21,6 +22,7 @@ class Token(models.Model):
     is_complated = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    employee =  models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
     def __str__(self):

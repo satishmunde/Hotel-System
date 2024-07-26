@@ -1,6 +1,7 @@
+from django.conf import settings
 from django.utils import timezone
 from django.db import models
-from employees.models import Employee
+
 from crm.models import Customer
 from Menu.models import MenuItem  # Assuming Item model is defined in menu app
 
@@ -28,7 +29,7 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
-    employee =  models.ForeignKey(Employee, on_delete=models.CASCADE)
+    employee =  models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"Order #{self.order_id} - {self.customer_name} - {self.total_amount} - {self.status}"

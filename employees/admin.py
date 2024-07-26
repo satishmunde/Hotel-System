@@ -1,6 +1,6 @@
 # admin.py
 from django.contrib import admin
-from .models import Department, Employee, Position, EmployeePosition
+from .models import Department, Position, EmployeePosition
 
 # Register your models here
 
@@ -8,11 +8,6 @@ from .models import Department, Employee, Position, EmployeePosition
 class DepartmentAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
-@admin.register(Employee)
-class EmployeeAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'email', 'phone_number', 'hire_date', 'is_active')
-    list_filter = ('is_active', 'hire_date')
-    search_fields = ('first_name', 'last_name', 'email')
 
 @admin.register(Position)
 class PositionAdmin(admin.ModelAdmin):
