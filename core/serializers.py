@@ -1,10 +1,11 @@
+from datetime import datetime
 from djoser.serializers import UserCreateSerializer as BaseUserCreateSerializer 
 from djoser.serializers import UserSerializer as BaseUserSerializer
 from rest_framework import serializers
 from .models import LoginSystem
 from employees.models import Document
 from employees.serializers import DocumentSerializer
-
+import re
 class LoginSystemSerializer(serializers.ModelSerializer):
     documents = serializers.SerializerMethodField()
     
@@ -35,58 +36,120 @@ class UserCreateSerializer(BaseUserCreateSerializer):
         extra_kwargs = {
             'password': {'write_only': True}
         }
+
         read_only_fields = ['emp_id'] 
 
-    def validate(self, data):
-        # Check for existing user with the same username
-        if LoginSystem.objects.filter(username=data.get('username')).exists():
-            raise serializers.ValidationError("Username already exists.")
+    def validate_username(self, value):
+        value = value.strip()
+        if not value:
+            raise serializers.ValidationError("Username is required.")
+        if LoginSystem.objects.filter(username__iexact=value).exists():
+            raise serializers.ValidationError("Username already exists (case-insensitive).")
+        
+        if not value.isalpha():
+            raise serializers.ValidationError("username  can contains only String")
+        # Additional checks can be added here (e.g., allowed characters)
+        return value
 
-        # Check for valid email
-        email = data.get('email')
-        if email and LoginSystem.objects.filter(email=email).exists():
-            raise serializers.ValidationError("Email already exists.")
+    def validate_first_name(self, value):
+        value = value.strip()
+        if not value:
+            raise serializers.ValidationError("First name is required.")
+        if len(value) > 100:
+            raise serializers.ValidationError("First name cannot exceed 100 characters.")
+        if not value.isalpha() :
+            raise serializers.ValidationError("First name can have only String ")
+        # Additional checks can be added here (e.g., allowed characters)
+        return value
 
-        # Validate phone number (example: ensure it's 10 digits)
-        phone_number = data.get('phone_number')
-        if phone_number and not phone_number.isdigit():
-            raise serializers.ValidationError("Phone number should contain only digits.")
-        if phone_number and len(phone_number) != 10:
-            raise serializers.ValidationError("Phone number should be 10 digits long.")
+    def validate_last_name(self, value):
+        value = value.strip()
+        if not value:
+            raise serializers.ValidationError("Last name is required.")
+        if len(value) > 100:
+            raise serializers.ValidationError("Last name cannot exceed 100 characters.")
+        if not value.isalpha() :
+            raise serializers.ValidationError("Last name can have only String ")
+        # Additional checks can be added here (e.g., allowed characters)
+        return value
 
-        # Validate Aadhar number (example: ensure it's 12 digits)
-        aadhar_number = data.get('aadhar_number')
-        if aadhar_number and not aadhar_number.isdigit():
-            raise serializers.ValidationError("Aadhar number should contain only digits.")
-        if aadhar_number and len(aadhar_number) != 12:
-            raise serializers.ValidationError("Aadhar number should be 12 digits long.")
+    def validate_email(self, value):
+        value = value.strip()
+        if not value:
+            raise serializers.ValidationError("Email is required.")
+        if not self.instance or value != self.instance.email:
+            if LoginSystem.objects.filter(email=value).exists():
+                raise serializers.ValidationError("Email already exists.")
+        email_regex = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+        if not re.match(email_regex, value):
+            raise serializers.ValidationError("Invalid email format.")
+        return value
 
-        # Validate PAN number (example: ensure it's 10 characters long and uppercase)
-        pan_number = data.get('pan_number')
-        if pan_number and (len(pan_number) != 10 or not pan_number.isupper()):
-            raise serializers.ValidationError("PAN number should be 10 uppercase characters.")
+    # def validate_date_of_birth(self, value):
+    #     # Example format: YYYY-MM-DD
+    #     if not isinstance(value, str):
+    #         raise serializers.ValidationError("Date of birth must be a string in YYYY-MM-DD format.")
+    #     try:
+    #         datetime.datetime.strptime(value, '%Y-%m-%d')
+    #     except ValueError:
+    #         raise serializers.ValidationError("Invalid date format. Use YYYY-MM-DD.")
+    #     # Additional age checks can be added here
+    #     return value
 
-        # Validate bank account number (example: ensure it's numeric)
-        bank_account_number = data.get('bank_account_number')
-        if bank_account_number and not bank_account_number.isdigit():
-            raise serializers.ValidationError("Bank account number should contain only digits.")
+    def validate_phone_number(self, value):
+        value = value.strip()
+        if not value.isdigit() or len(value) != 10:
+            raise serializers.ValidationError("Phone number must be a 10-digit number.")
+        # Additional checks can be added here (e.g., country code validation)
+        return value
 
-        # Validate IFSC code (example: ensure it's 11 characters and uppercase)
-        bank_ifsc_code = data.get('bank_ifsc_code')
-        if bank_ifsc_code and (len(bank_ifsc_code) != 11 or not bank_ifsc_code.isupper()):
-            raise serializers.ValidationError("IFSC code should be 11 uppercase characters.")
+    def validate_address(self, value):
+        value = value.strip()
+        if not value:
+            raise serializers.ValidationError("Address is required.")
+        if len(value) > 255:
+            raise serializers.ValidationError("Address cannot exceed 255 characters.")
+        # Additional checks can be added here (e.g., allowed characters)
+        return value
 
-        # Validate date of birth (example: ensure it's a valid date)
-        # date_of_birth = data.get('date_of_birth')
-        # if date_of_birth:
-        #     from datetime import datetime
-        #     try:
-        #         datetime.strptime(date_of_birth, '%Y-%m-%d')    
-        #     except ValueError:
-        #         raise serializers.ValidationError("Date of birth must be in YYYY-MM-DD format.")
+    def validate_aadhar_number(self, value):
+        value = value.strip()
+        if not value.isdigit() or len(value) != 12:
+            raise serializers.ValidationError("Aadhar number must be a 12-digit number.")
+        # Additional checks can be added here (e.g., checksum validation)
+        return value
 
-        return data
+    def validate_pan_number(self, value):
+        value = value.strip()
+        pan_regex = r"^[A-Z]{5}[0-9]{4}[A-Z]{1}$"
+        if not re.match(pan_regex, value):
+            raise serializers.ValidationError("Invalid PAN number format.")
+        # Additional checks can be added here
+        return value
 
+    def validate_bank_name(self, value):
+        value = value.strip()
+        if not value:
+            raise serializers.ValidationError("Bank name is required.")
+        if len(value) > 100:
+            raise serializers.ValidationError("Bank name cannot exceed 100 characters.")
+        # Additional checks can be added here (e.g., allowed characters)
+        return value
+
+    def validate_bank_account_number(self, value):
+        value = value.strip()
+        if not value.isdigit() or len(value) < 8 or len(value) > 16:
+            raise serializers.ValidationError("Bank account number must be between 8 and 16 digits.")
+        # Additional checks can be added here (e.g., checksum validation)
+        return value
+
+    def validate_bank_ifsc_code(self, value):
+        value = value.strip()
+        if len(value) != 11 or not re.match(r"^[A-Z]{4}0[A-Z0-9]{6}$", value):
+            raise serializers.ValidationError("Invalid IFSC code format.")
+        # Additional checks can be added here
+        return value
+    
     def create(self, validated_data):
         # Extract password from validated data
         password = validated_data.pop('password', None)

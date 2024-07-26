@@ -1,5 +1,4 @@
 from django.db import models
-
 from django.conf import settings
 
 
@@ -9,11 +8,9 @@ class Identity_Card(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
 
-
     def __str__(self):
         return f"ID Card for {self.employee.first_name} {self.employee.last_name}"
     
     def delete(self, *args, **kwargs):
         self.is_active = False
         self.save()
-
