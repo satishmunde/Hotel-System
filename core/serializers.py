@@ -54,8 +54,10 @@ class UserSerializer(BaseUserSerializer):
     class Meta:
         ref_name = "BaseUser"  
         model = LoginSystem
-        fields = [
-            '__all__'
+        fields =[
+           'emp_id', 'username', 'first_name', 'last_name', 'email', 'date_of_birth', 'phone_number',
+            'profile_pictures', 'address', 'aadhar_number', 'pan_number', 'bank_name',
+            'bank_account_number', 'bank_ifsc_code', 'is_doc_uploaded', 'password' , 'is_staff','documents',
         ]
 
     def get_documents(self, obj):
