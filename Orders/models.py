@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.utils import timezone
 from django.db import models
-
 from crm.models import Customer
 from Menu.models import MenuItem  # Assuming Item model is defined in menu app
 
@@ -19,10 +18,11 @@ class Order(models.Model):
         ('pending', 'Pending'),
         ('in_progress', 'In Progress'),
         ('completed', 'Completed'),
-        # Add more statuses as needed
+
     ]
     
     order_id = models.CharField(primary_key=True, max_length=15,default=generate_order_id)
+    table_number = models.IntegerField(null=False ,blank=False)
     customer_name = models.ForeignKey(Customer, on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
@@ -57,6 +57,7 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='order_items', on_delete=models.CASCADE)
     item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
+    extra_tip =  models.CharField(max_length=250, null=True,blank=True )
     total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def save(self, *args, **kwargs):

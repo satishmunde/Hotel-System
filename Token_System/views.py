@@ -1,8 +1,12 @@
 from rest_framework import viewsets
-from .models import Token
-from .serializers import TokenSerializer
+from .models import TokenOrderItem, TokenOrder
+from .serializers import TokenOrderSerializer,TokenOrderItemSerializer
 
 
-class TokenViewSet(viewsets.ModelViewSet):
-    queryset = Token.objects.all()
-    serializer_class = TokenSerializer
+class TokenOrderViewSet(viewsets.ModelViewSet):
+    queryset = TokenOrder.objects.all()
+    serializer_class = TokenOrderSerializer
+    
+class TokenOrderItemViewSet(viewsets.ModelViewSet):
+    queryset = TokenOrderItem.objects.all()
+    serializer_class = TokenOrderItemSerializer
