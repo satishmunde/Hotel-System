@@ -7,8 +7,20 @@ from core.models import LoginSystem
 class LoginSystemAdmin(BaseUserAdmin):
     # Fields to use when adding a new LoginSystem user
     add_fieldsets = (
-        (None, {
+       (None, {
             'fields': ('username', 'email', 'phone_number', 'date_of_birth', 'profile_pictures', 'password1', 'password2')
+        }),
+        ('Personal info', {
+            'fields': ('first_name', 'last_name', 'address', 'aadhar_number', 'pan_number', 'bank_name', 'bank_account_number', 'bank_ifsc_code')
+        }),
+        ('Permissions', {
+            'fields': ('is_active', 'is_staff', 'is_superuser', 'user_permissions', 'groups')
+        }),
+        ('Important dates', {
+            'fields': ('last_login', 'date_joined')
+        }),
+        ('Documents', {
+            'fields': ('is_doc_uploaded',)
         }),
     )
 
@@ -43,10 +55,3 @@ class LoginSystemAdmin(BaseUserAdmin):
         return form
 
     # Override save model to ensure password is handled correctly
-    def save_model(self, request, obj, form, change):
-        if not change:  # New user
-            obj.set_password(form.cleaned_data['password1'])
-        else:  # Existing user
-            if form.cleaned_data['password1']:
-                obj.set_password(form.cleaned_data['password1'])
-        super().save_model(request, obj, form, change)

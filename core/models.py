@@ -2,11 +2,11 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 def generate_emp_id():
-    # latest_emp = LoginSystem.objects.order_by('emp_id').last()
-    # if latest_emp:
-    #     latest_number = int(latest_emp.emp_id[3:]) + 1
-    # else:
-    latest_number = 1
+    latest_emp = LoginSystem.objects.order_by('emp_id').last()
+    if latest_emp:
+        latest_number = int(latest_emp.emp_id[3:]) + 1
+    else:
+        latest_number = 1
     return f"EMP-{latest_number:07}"
 
 
