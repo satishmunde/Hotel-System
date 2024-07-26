@@ -15,13 +15,6 @@ class LoginSystemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = LoginSystem
-        # fields = [
-        #     'emp_id','username', 'first_name', 'last_name', 'email', 'date_of_birth',
-        #     'phone_number',  'profile_pictures', 'address',
-        #     'aadhar_number', 'pan_number', 'bank_name', 'bank_account_number',
-        #     'bank_ifsc_code', 'is_doc_uploaded'
-          
-        # ]
         fields = '__all__'
         read_only_fields = ['emp_id'] 
         extra_kwargs = {
@@ -114,14 +107,7 @@ class UserSerializer(BaseUserSerializer):
     class Meta:
         ref_name = "BaseUser"  
         model = LoginSystem
-        # fields =[
-        #    'emp_id', 'username', 'first_name', 'last_name', 'email', 'date_of_birth', 'phone_number',
-        #     'profile_pictures', 'address', 'aadhar_number', 'pan_number', 'bank_name',
-        #     'bank_account_number', 'bank_ifsc_code', 'is_doc_uploaded', 'password' , 'is_staff','documents',
-        # ]
-        # extra_kwargs = {
-        #     'password': {'write_only': True}
-        # }
+
 
         fields = '__all__'
         read_only_fields = ['emp_id']   
