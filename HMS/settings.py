@@ -216,3 +216,14 @@ REDOC_SETTINGS = {
    'LAZY_RENDERING': False,
 
 }
+
+# settings.py
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Gmail's SMTP server
+EMAIL_PORT = 587  # Port for TLS
+EMAIL_USE_TLS = True  # Use TLS
+EMAIL_USE_SSL = False  # Do not use SSL (use TLS instead)
+EMAIL_HOST_USER = 'satishmh26@gmail.com'  # Your Gmail address
+EMAIL_HOST_PASSWORD = 'gdug zoaf enta zjia'  #    gdug zoaf enta zjia
+DEFAULT_FROM_EMAIL = 'satishmh26@gmail.com'  # Default "From" email address

@@ -47,7 +47,7 @@ urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('__debug__/', include(debug_toolbar.urls)),
-    
+    path("send_email", views.email),
     path('menu/', include('Menu.urls')),
     path("admin/", admin.site.urls),
     path("", views.home),
