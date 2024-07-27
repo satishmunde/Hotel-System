@@ -7,8 +7,8 @@ from core.models import LoginSystem
 class LoginSystemAdmin(BaseUserAdmin):
     
     add_fieldsets = (
-       (None, {
-            'fields': ('username', 'email', 'phone_number', 'date_of_birth', 'profile_pictures', 'password1', 'password2')
+       ('Authentication Creadencial', {
+            'fields': ('username','access_token','refresh_token', 'email', 'phone_number', 'date_of_birth', 'profile_pictures', 'password1', 'password2')
         }),
         ('Personal info', {
             'fields': ('first_name', 'last_name', 'address', 'aadhar_number', 'pan_number', 'bank_name', 'bank_account_number', 'bank_ifsc_code')
@@ -45,6 +45,7 @@ class LoginSystemAdmin(BaseUserAdmin):
     list_display = ('username', 'email', 'phone_number', 'date_of_birth', 'emp_id', 'is_active', 'first_name', 'last_name')
     search_fields = ('username', 'email', 'phone_number', 'date_of_birth', 'first_name', 'last_name', 'address', 'aadhar_number', 'pan_number', 'bank_name', 'bank_account_number', 'bank_ifsc_code')
     ordering = ('username',)
+    readonly_fields = ('access_token', 'refresh_token')
 
     # Add form for creating and updating users
     def get_form(self, request, obj=None, **kwargs):

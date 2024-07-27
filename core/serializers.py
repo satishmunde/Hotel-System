@@ -31,7 +31,7 @@ class UserCreateSerializer(BaseUserCreateSerializer):
         fields = [
             'emp_id', 'username', 'first_name', 'last_name', 'email', 'date_of_birth', 'phone_number',
             'profile_pictures', 'address', 'aadhar_number', 'pan_number', 'bank_name',
-            'bank_account_number', 'bank_ifsc_code', 'is_doc_uploaded', 'password', 'is_staff',
+            'bank_account_number', 'bank_ifsc_code', 'is_doc_uploaded', 'password', 'is_staff' ,'is_superuser',
         ]
         extra_kwargs = {
             'password': {'write_only': True}
@@ -68,7 +68,7 @@ class UserCreateSerializer(BaseUserCreateSerializer):
             raise serializers.ValidationError("Last name is required.")
         if len(value) > 100:
             raise serializers.ValidationError("Last name cannot exceed 100 characters.")
-        if not value.isalpha() :
+        if not value.isalpha():
             raise serializers.ValidationError("Last name can have only String ")
         # Additional checks can be added here (e.g., allowed characters)
         return value
