@@ -522,7 +522,7 @@
                   <a
                     class="dropdown-item preview-item"
                     href="#"
-                    onclick="javascript:document.getElementById('logout-form').submit(); return false;"
+                    onclick="handleLogout();"
                   >
                     <div class="preview-thumbnail">
                       <div class="preview-icon bg-dark rounded-circle">
@@ -1452,27 +1452,7 @@
           </div>
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
-          <footer class="footer">
-            <div
-              class="d-sm-flex justify-content-center justify-content-sm-between"
-            >
-              <span
-                class="text-muted d-block text-center text-sm-left d-sm-inline-block"
-                >Copyright © bootstrapdash.com 2020</span
-              >
-              <span
-                class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"
-              >
-                Free
-                <a
-                  href="https://www.bootstrapdash.com/bootstrap-admin-template/"
-                  target="_blank"
-                  >Bootstrap admin templates</a
-                >
-                from Bootstrapdash.com</span
-              >
-            </div>
-          </footer>
+
           <!-- partial -->
         </div>
         <!-- main-panel ends -->
@@ -1499,6 +1479,12 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <script src="/static/assets/js/dashboard.js"></script>
+
+    <script>
+      function handleLogout() {
+        document.getElementById("logout-form").submit();
+      }
+    </script>
 
     <!-- End custom js for this page -->
   </body>

@@ -4,12 +4,14 @@ from django.template.loader import render_to_string
 from django.http import HttpResponse
 from django.conf import settings
 from rest_framework_simplejwt.tokens import RefreshToken
-
 from django.contrib.auth import authenticate
 from rest_framework import status
 from django.contrib.auth.decorators import login_required
 from rest_framework.response import Response
 from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.views import LogoutView
+from django.utils.decorators import method_decorator
+
 
 
 @login_required
@@ -32,15 +34,15 @@ def login(request):
             
             refresh = RefreshToken.for_user(user)
             create_token(user,refresh)
-           
-            # return Response(data, status=status.HTTP_200_OK)
             request.session['access_token'] = str(refresh.access_token)
             request.session['refresh_token'] = str(refresh)
             request.session['success_message'] = 'Login successful!'
 
 
-            # next_url = request.GET.get('next', '')
-            return redirect('/')
+            next_url = request.GET.get('next', '/')
+            
+            # Redirect to the 'next' URL or to the home page
+            return redirect(next_url)
         else:
             return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
     
@@ -78,6 +80,21 @@ def register(request):
 def forget_password(request):
     pass
 
+
+
+
+class LogoutView(LogoutView):
+    @method_decorator(login_required)  # Ensure the user is logged in
+    def dispatch(self, request, *args, **kwargs):
+        # Custom logic to set the token field to null
+        user = request.user
+        
+        user.access_token = None
+        user.refresh_token = None
+        user.save()
+        
+        # Call the parent dispatch method
+        return super().dispatch(request, *args, **kwargs)
 
 
 

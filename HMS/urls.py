@@ -39,16 +39,16 @@ schema_view = get_schema_view(
     authentication_classes=[]
 )
 
-from django.contrib.auth.views import LogoutView
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     # Other URL patterns
-    path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    path('__debug__/', include(debug_toolbar.urls)),
+    path('swagger<format>/', login_required(schema_view.without_ui(cache_timeout=0)), name='schema-json'),
+    path('swagger/', login_required(schema_view.with_ui('swagger', cache_timeout=0)), name='schema-swagger-ui'),
+    path('redoc/', login_required(schema_view.with_ui('redoc', cache_timeout=0)), name='schema-redoc'),
     path("admin/", admin.site.urls),
      
+    path('__debug__/', include(debug_toolbar.urls)),
      
     
     path('menu/', include('Menu.urls')),
@@ -67,7 +67,8 @@ urlpatterns = [
     path("register/", views.register),
     path("forget-password/", views.forget_password),
     # path('logout/', views.logout, name='logout'),
-    path('logout/', LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name='logout'),
+    # path('logout/', LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name='logout'),
+    path('logout/', views.LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name='logout'),
     path("send_email", views.email),
 
 ]
