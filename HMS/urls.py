@@ -47,10 +47,11 @@ urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('__debug__/', include(debug_toolbar.urls)),
-    path("send_email", views.email),
-    path('menu/', include('Menu.urls')),
     path("admin/", admin.site.urls),
-    path("", views.home),
+     
+     
+    
+    path('menu/', include('Menu.urls')),
     path('orders/', include('Orders.urls')),
     path('employees/', include('employees.urls')),
     path('crm/', include('crm.urls')),
@@ -58,6 +59,14 @@ urlpatterns = [
     path('token/', include('Token_System.urls')),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
+    
+    
+    
+    path("", views.home),
+    path("login/", views.login),
+    path("register/", views.register),
+    path("forget-password/", views.forget_password),
+    path("send_email", views.email),
 
 ]
 

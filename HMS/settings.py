@@ -218,6 +218,10 @@ REDOC_SETTINGS = {
 }
 
 # settings.py
+LOGIN_URL = '/login/'  # Adjust this URL according to your login page URL
+
+
+# settings.py
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  # Gmail's SMTP server
