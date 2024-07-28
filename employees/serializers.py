@@ -1,12 +1,31 @@
+from datetime import datetime
 import re
 from rest_framework import serializers
-from .models import Department, Document, Position, EmployeePosition, RequiredDocument
+from .models import Department, Document, Position, EmployeePosition, RequiredDocument,EmployeePayment
+
 
 # Regex patterns for validation
 ALPHA_ONLY_PATTERN = re.compile(r'^[a-zA-Z\s]+$')
 SAFE_FILENAME_PATTERN = re.compile(r'^[\w\-. ]+$')  # Only allow alphanumeric, underscores, hyphens, dots, and spaces
 MIN_LENGTH = 1
 MAX_LENGTH = 100
+
+
+class EmployeePaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EmployeePayment
+        fields = '__all__'
+    
+    def validate_amount(self, value):
+        if value <= 0:
+            raise serializers.ValidationError("Amount must be greater than zero.")
+        return value
+
+    def validate_payment_date(self, value):
+        if value > datetime.date.today():
+            raise serializers.ValidationError("Payment date cannot be in the future.")
+        return value
+
 
 class DepartmentSerializer(serializers.ModelSerializer):
     def validate_name(self, value):

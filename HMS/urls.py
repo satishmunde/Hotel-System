@@ -58,6 +58,7 @@ urlpatterns = [
     path('id_generator/', include('id_generator.urls')),    
     path('token/', include('Token_System.urls')),
     path('billing/', include('Billing.urls')),
+    path('inventory/', include('inventory.urls')),
     
     
     

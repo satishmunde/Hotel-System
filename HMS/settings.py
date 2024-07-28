@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     "id_generator",
     "Token_System",
     'corsheaders',
-    "ERP",
+    'inventory',
     "Menu",
     "Orders",
     "employees",

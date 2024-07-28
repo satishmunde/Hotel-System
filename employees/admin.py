@@ -24,3 +24,13 @@ class EmployeePositionAdmin(admin.ModelAdmin):
 class PositionAdmin(admin.ModelAdmin):
     list_display = ('employee','document_type','is_active')
 
+from django.contrib import admin
+from .models import EmployeePayment
+
+class EmployeePaymentAdmin(admin.ModelAdmin):
+    list_display = ('employee', 'payment_date', 'amount', 'payment_method', 'description')
+    search_fields = ('employee__username', 'payment_method', 'description')
+    list_filter = ('payment_date', 'payment_method')
+    ordering = ('-payment_date',)
+
+admin.site.register(EmployeePayment, EmployeePaymentAdmin)

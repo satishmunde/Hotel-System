@@ -9,6 +9,7 @@ router.register(r'positions', views.PositionViewSet)
 router.register(r'employeepositions', views.EmployeePositionViewSet)
 router.register(r'req-docs', views.RequiredDocumentViewSet)
 router.register(r'documents', views.DocumentViewSet)
+router.register(r'employee-payments', views.EmployeePaymentViewSet)
 
 
 

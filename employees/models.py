@@ -94,3 +94,14 @@ class RequiredDocument(models.Model):
     def delete(self, *args, **kwargs):
         self.is_active = False
         self.save()
+
+
+class EmployeePayment(models.Model):
+    employee = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='payments')
+    payment_date = models.DateField()
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_method = models.CharField(max_length=50)  # e.g., Bank Transfer, Cash
+    description = models.CharField(max_length=255)  # e.g., Salary, Bonus
+
+    def __str__(self):
+        return f"Payment of {self.amount} to {self.employee.first_name} {self.employee.last_name} on {self.payment_date}"

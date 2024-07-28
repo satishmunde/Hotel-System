@@ -1,8 +1,15 @@
 # viewsets.py
 from rest_framework.response import Response  
 from rest_framework import viewsets
-from .models import Department, Position, EmployeePosition ,RequiredDocument,Document
-from .serializers import DepartmentSerializer, PositionSerializer, EmployeePositionSerializer ,RequiredDocumentsSerializer,DocumentSerializer
+from .models import Department, Position, EmployeePosition ,RequiredDocument,Document,EmployeePayment
+from .serializers import DepartmentSerializer, PositionSerializer, EmployeePositionSerializer ,RequiredDocumentsSerializer,DocumentSerializer,EmployeePaymentSerializer
+
+
+
+class EmployeePaymentViewSet(viewsets.ModelViewSet):
+    queryset = EmployeePayment.objects.all()
+    serializer_class = EmployeePaymentSerializer
+
 
 class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = Department.objects.all()

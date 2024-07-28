@@ -1,5 +1,7 @@
 # crmapp/models.py
 from django.db import models
+from core.models import LoginSystem
+# from Orders.models import Order
 
 class Customer(models.Model):
     name = models.CharField(max_length=100)
@@ -15,4 +17,3 @@ class Customer(models.Model):
     def delete(self, *args, **kwargs):
         self.is_active = False
         self.save()
-
