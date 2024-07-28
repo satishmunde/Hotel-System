@@ -13,7 +13,7 @@ def generate_emp_id():
 
 class LoginSystem(AbstractUser):
     id = models.AutoField(primary_key=True)
-    emp_id = models.CharField(unique=True, max_length=11, default=generate_emp_id)
+    emp_id = models.CharField(unique=True, max_length=11,)
     first_name = models.CharField(max_length=100, null=False)
     last_name = models.CharField(max_length=100, null=False)
     email = models.EmailField(unique=True)
@@ -34,6 +34,22 @@ class LoginSystem(AbstractUser):
     
     
     USERNAME_FIELD = 'emp_id'
+    
+    
+    def generate_emp_id(self):
+        latest_emp = LoginSystem.objects.order_by('emp_id').last()
+        if latest_emp:
+            latest_number = int(latest_emp.emp_id[4:]) + 1
+        else:
+            latest_number = 1
+
+        return f"EMP-{latest_number:07}"
+    
+    
+    def save(self, *args, **kwargs):
+        if not self.emp_id:
+            self.emp_id = self.generate_emp_id()
+        super().save(*args, **kwargs)
 
 
     

@@ -4,9 +4,6 @@ from django.utils import timezone
 from Menu.models import MenuItem
 from crm.models import Customer
 
-
-
-
 def generate_token_id():
     today = timezone.localdate()
     formatted_date = today.strftime('%y-%m-%d')
@@ -15,8 +12,7 @@ def generate_token_id():
     order_counter = orders_today + 1
     
     return f"T-{formatted_date}-{order_counter:04}"
-
-    
+ 
 class TokenOrder(models.Model):
     token_number = models.CharField(primary_key=True, max_length=15,default=generate_token_id)
 
@@ -56,7 +52,6 @@ class TokenOrder(models.Model):
     class Meta:
         verbose_name = 'Token'
         verbose_name_plural = 'Tokens'
-
 
 class TokenOrderItem(models.Model):
     token = models.ForeignKey(TokenOrder, related_name='order_items', on_delete=models.CASCADE)

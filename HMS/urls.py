@@ -23,6 +23,7 @@ import debug_toolbar
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
+from django.contrib.auth.decorators import login_required
 
 # Define the schema view
 schema_view = get_schema_view(
@@ -34,12 +35,12 @@ schema_view = get_schema_view(
         contact=openapi.Contact(email="contact@example.com"),
         license=openapi.License(name="BSD License"),
     ),
-    public=True,  # Set to True to allow access without authentication
+    public=True,  
     permission_classes=(permissions.AllowAny,),
     authentication_classes=[]
 )
 
-from django.contrib.auth.decorators import login_required
+
 
 urlpatterns = [
     # Other URL patterns
@@ -49,7 +50,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
      
     path('__debug__/', include(debug_toolbar.urls)),
-     
     
     path('menu/', include('Menu.urls')),
     path('orders/', include('Orders.urls')),
@@ -57,17 +57,18 @@ urlpatterns = [
     path('crm/', include('crm.urls')),
     path('id_generator/', include('id_generator.urls')),    
     path('token/', include('Token_System.urls')),
+    path('billing/', include('Billing.urls')),
+    
+    
+    
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
-    
     
     
     path("", views.home),
     path("login/", views.login),
     path("register/", views.register),
     path("forget-password/", views.forget_password),
-    # path('logout/', views.logout, name='logout'),
-    # path('logout/', LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name='logout'),
     path('logout/', views.LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name='logout'),
     path("send_email", views.email),
 

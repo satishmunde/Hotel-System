@@ -11,15 +11,13 @@ from rest_framework.response import Response
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.views import LogoutView
 from django.utils.decorators import method_decorator
+from core.models import LoginSystem
 
 
 
 @login_required
 def home(request):
     return render(request, 'index.html')
-
-
-
 
 def login(request):
     if request.method == 'POST':
@@ -48,10 +46,6 @@ def login(request):
     
     return render(request, 'login.html')
 
-
-
-from core.models import LoginSystem
-
 def create_token(user,refresh):
     try:
         print(user)
@@ -59,9 +53,7 @@ def create_token(user,refresh):
         token.access_token = str(refresh.access_token)
         token.refresh_token = str(refresh)
         token.save()
-        print('-------------------------')
         
-        print(token)
     except LoginSystem.DoesNotExist:
         token = LoginSystem.objects.create(
             user=user,
@@ -70,18 +62,11 @@ def create_token(user,refresh):
         )
     return token
 
-
 def register(request):
     return render(request, 'register.html')
 
-
-
-
 def forget_password(request):
     pass
-
-
-
 
 class LogoutView(LogoutView):
     @method_decorator(login_required)  # Ensure the user is logged in
@@ -95,8 +80,6 @@ class LogoutView(LogoutView):
         
         # Call the parent dispatch method
         return super().dispatch(request, *args, **kwargs)
-
-
 
 def email():
     print('calling')
