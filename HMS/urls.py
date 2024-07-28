@@ -51,13 +51,13 @@ urlpatterns = [
      
     path('__debug__/', include(debug_toolbar.urls)),
     
-    path('menu/', include('Menu.urls')),
-    path('orders/', include('Orders.urls')),
+    path('menu/', include('menu.urls')),
+    path('orders/', include('orders.urls')),
     path('employees/', include('employees.urls')),
     path('crm/', include('crm.urls')),
     path('id_generator/', include('id_generator.urls')),    
-    path('token/', include('Token_System.urls')),
-    path('billing/', include('Billing.urls')),
+    path('token/', include('token_system.urls')),
+    path('billing/', include('billing.urls')),
     path('inventory/', include('inventory.urls')),
     
     

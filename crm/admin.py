@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Customer
-from Orders.models import Order  # Adjust import as per your app structure
+from orders.models import Order  # Adjust import as per your app structure
 
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'phone', 'address', 'created_at', 'total_orders')
