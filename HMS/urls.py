@@ -39,7 +39,7 @@ schema_view = get_schema_view(
     authentication_classes=[]
 )
 
-
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     # Other URL patterns
@@ -66,6 +66,8 @@ urlpatterns = [
     path("login/", views.login),
     path("register/", views.register),
     path("forget-password/", views.forget_password),
+    # path('logout/', views.logout, name='logout'),
+    path('logout/', LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name='logout'),
     path("send_email", views.email),
 
 ]

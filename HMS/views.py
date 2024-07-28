@@ -11,15 +11,6 @@ from django.contrib.auth.decorators import login_required
 from rest_framework.response import Response
 from django.contrib.auth import authenticate, login as auth_login
 
-# from django.contrib.auth.forms import PasswordResetForm
-# from django.contrib.auth.tokens import default_token_generator
-# from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-# from django.template.loader import render_to_string
-# from django.core.mail import send_mail
-# from django.conf import settings
-# from django.http import HttpResponse
-# from django.shortcuts import render
-# from django.utils.encoding import force_bytes, force_text
 
 @login_required
 def home(request):
@@ -38,12 +29,10 @@ def login(request):
         if user is not None:
             # Log in the user
             auth_login(request, user)
+            
             refresh = RefreshToken.for_user(user)
-            data = {
-                'access': str(refresh.access_token),
-                'refresh': str(refresh),
-            }
-            print(data)
+            create_token(user,refresh)
+           
             # return Response(data, status=status.HTTP_200_OK)
             request.session['access_token'] = str(refresh.access_token)
             request.session['refresh_token'] = str(refresh)
@@ -58,6 +47,28 @@ def login(request):
     return render(request, 'login.html')
 
 
+
+from core.models import LoginSystem
+
+def create_token(user,refresh):
+    try:
+        print(user)
+        token = LoginSystem.objects.get(emp_id=user.emp_id)
+        token.access_token = str(refresh.access_token)
+        token.refresh_token = str(refresh)
+        token.save()
+        print('-------------------------')
+        
+        print(token)
+    except LoginSystem.DoesNotExist:
+        token = LoginSystem.objects.create(
+            user=user,
+            access_token=str(refresh.access_token),
+            refresh_token=str(refresh)
+        )
+    return token
+
+
 def register(request):
     return render(request, 'register.html')
 
@@ -66,29 +77,7 @@ def register(request):
 
 def forget_password(request):
     pass
-    # if request.method == 'POST':
-    #     form = PasswordResetForm(request.POST)
-    #     if form.is_valid():
-    #         email = form.cleaned_data['email']
-    #         users = User.objects.filter(email=email)
-    #         for user in users:
-    #             subject = "Password Reset Requested"
-    #             email_template_name = "password_reset_email.html"
-    #             c = {
-    #                 "email": user.email,
-    #                 "domain": request.META['HTTP_HOST'],
-    #                 "site_name": "Your Site",
-    #                 "uid": urlsafe_base64_encode(force_bytes(user.pk)),
-    #                 "user": user,
-    #                 "token": default_token_generator.make_token(user),
-    #                 "protocol": request.scheme,
-    #             }
-    #             email_body = render_to_string(email_template_name, c)
-    #             send_mail(subject, email_body, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False)
-    #         return HttpResponse("Password reset email sent")
-    # else:
-    #     form = PasswordResetForm()
-    # return render(request, 'forget_password.html', {'form': form})
+
 
 
 
@@ -118,3 +107,5 @@ def email():
     except Exception as e:
         print({'error_message': str(e)})
         return HttpResponse(f"Error sending email: {str(e)}")
+
+
