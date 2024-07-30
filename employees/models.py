@@ -38,6 +38,32 @@ class Document(models.Model):
     def delete(self, *args, **kwargs):
         self.is_active = False
         self.save()
+        
+from django.db.models.signals import pre_save, post_delete
+from django.dispatch import receiver
+from django.core.files.storage import default_storage
+from .models import Document
+
+@receiver(pre_save, sender=Document)
+def delete_old_profile_picture(sender, instance, **kwargs):
+    if not instance.pk:
+        return False
+
+    try:
+        old_file = sender.objects.get(pk=instance.pk).profile_pictures
+    except sender.DoesNotExist:
+        return False
+
+    new_file = instance.profile_pictures
+    if not old_file == new_file:
+        if old_file and default_storage.exists(old_file.path):
+            default_storage.delete(old_file.path)
+
+@receiver(post_delete, sender=Document)
+def delete_profile_picture_on_delete(sender, instance, **kwargs):
+    if instance.profile_pictures and default_storage.exists(instance.profile_pictures.path):
+        default_storage.delete(instance.profile_pictures.path)
+
 
 
 def generate_pos_id():
@@ -102,6 +128,7 @@ class EmployeePayment(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     payment_method = models.CharField(max_length=50)  # e.g., Bank Transfer, Cash
     description = models.CharField(max_length=255)  # e.g., Salary, Bonus
+    document = models.FileField(upload_to='employee_payment_slip/')
 
     def __str__(self):
         return f"Payment of {self.amount} to {self.employee.first_name} {self.employee.last_name} on {self.payment_date}"
