@@ -27,7 +27,7 @@ class BillSerializer(serializers.ModelSerializer):
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
-        fields = ['payment_id', 'order', 'customer_id', 'bill', 'payment_date', 'payment_method', 'amount_paid']
+        fields = ['payment_id', 'order', 'bill', 'payment_date', 'payment_method', 'amount_paid']
 
     def validate_amount_paid(self, value):
         if value <= 0:

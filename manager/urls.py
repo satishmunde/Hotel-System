@@ -51,23 +51,54 @@ urlpatterns = [
      
     path('__debug__/', include(debug_toolbar.urls)),
     
-    path('menu/', include('menu.urls')),
-    path('orders/', include('orders.urls')),
-    path('employees/', include('employees.urls')),
-    path('crm/', include('crm.urls')),
-    path('id_generator/', include('id_generator.urls')),    
-    path('token/', include('token_system.urls')),
-    path('billing/', include('billing.urls')),
-    path('inventory/', include('inventory.urls')),
+    path('api/menu/', include('menu.urls')),
+    path('api/orders/', include('orders.urls')),
+    path('api/employees/', include('employees.urls')),
+    path('api/crm/', include('crm.urls')),
+    path('api/id_generator/', include('id_generator.urls')),    
+    path('api/token/', include('token_system.urls')),
+    path('api/billing/', include('billing.urls')),
+    path('api/inventory/', include('inventory.urls')),
     
     
     
-    path('auth/', include('djoser.urls')),
-    path('auth/', include('djoser.urls.jwt')),
+    path('api/auth/', include('djoser.urls')),
+    path('api/auth/', include('djoser.urls.jwt')),
     
     
     path("", views.home),
     path("login/", views.login),
+    path("token/", views.token), 
+    path("id_generator/", views.id_generator), 
+    path("billing/", views.billing), 
+    path("erp/", views.erp), 
+    
+    path("menu/", views.menu), 
+    path("menu/create/", views.menu),
+    path("menu/update/", views.menu),
+    path("menu/delete/", views.menu),
+    path("menu/payment/", views.menu),
+    
+    path("order/", views.order), 
+    path("order/create/", views.order),
+    path("order/update/", views.order),
+    path("order/delete/", views.order),
+    path("order/payment/", views.order),
+        
+
+    path("employee/", views.employee), 
+    path("employee/create/", views.employee),
+    path("employee/update/", views.employee),
+    path("employee/delete/", views.employee),
+    path("employee/payment/", views.employee),
+    
+    
+    path("inventory/", views.inventory), 
+    path("inventory/create/", views.inventory),
+    path("inventory/update/", views.inventory),
+    path("inventory/delete/", views.inventory),
+    path("inventory/payment/", views.inventory),
+    
     path("register/", views.register),
     path("forget-password/", views.forget_password),
     path('logout/', views.LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name='logout'),

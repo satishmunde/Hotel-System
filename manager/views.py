@@ -19,6 +19,39 @@ from core.models import LoginSystem
 def home(request):
     return render(request, 'index.html')
 
+@login_required
+def employee(request):
+    return render(request, 'employee.html')
+
+@login_required
+def erp(request):
+    return render(request, 'erp.html')
+
+
+@login_required
+def menu(request):
+    return render(request, 'menu.html')
+
+@login_required
+def billing(request):
+    return render(request, 'billing.html')
+
+@login_required
+def id_generator(request):
+    return render(request, 'id_generator.html')
+
+@login_required
+def order(request):
+    return render(request, 'order.html')
+
+@login_required
+def inventory(request):
+    return render(request, 'inventory.html')
+
+@login_required
+def token(request):
+    return render(request, 'token.html')
+
 def login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
