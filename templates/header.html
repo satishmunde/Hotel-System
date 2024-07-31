@@ -3,38 +3,70 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <title>The Ultimate Manager</title>
-    {% comment %}
-    {% if request.path == '/aboutus' %}
-      <link rel="stylesheet" href="/static/team.css" />
-    {% endif %}
-    {% if request.path == '/ordhist' %}
-      <link rel="stylesheet" href="/static/ordhist.css" />
-    {% endif %}
-
-    <link rel="stylesheet" href="/static/header.css" />
-    {% if request.path == '/checkout' %}
-      <link rel="stylesheet" href="/static/checkout.css" />
-    {% endif %}
-    {% if request.path == '/payment' %}
-      <link rel="stylesheet" href="/static/payment.css" />
-    {% endif %} {% endcomment %}
 
     <!-- plugins:css -->
-    <link rel="stylesheet" href="/static/assets/vendors/mdi/css/materialdesignicons.min.css" />
-    <link rel="stylesheet" href="/static/assets/vendors/css/vendor.bundle.base.css" />
+    <link
+      rel="stylesheet"
+      href="/static/assets/vendors/mdi/css/materialdesignicons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/static/assets/vendors/css/vendor.bundle.base.css"
+    />
     <!-- endinject -->
     <!-- Plugin css for this page -->
-    <link rel="stylesheet" href="/static/assets/vendors/jvectormap/jquery-jvectormap.css" />
-    <link rel="stylesheet" href="/static/assets/vendors/flag-icon-css/css/flag-icon.min.css" />
-    <link rel="stylesheet" href="/static/assets/vendors/owl-carousel-2/owl.carousel.min.css" />
-    <link rel="stylesheet" href="/static/assets/vendors/owl-carousel-2/owl.theme.default.min.css" />
+    <link
+      rel="stylesheet"
+      href="/static/assets/vendors/jvectormap/jquery-jvectormap.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/static/assets/vendors/flag-icon-css/css/flag-icon.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/static/assets/vendors/owl-carousel-2/owl.carousel.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/static/assets/vendors/owl-carousel-2/owl.theme.default.min.css"
+    />
 
     <link rel="stylesheet" href="/static/assets/css/style.css" />
     <!-- End layout styles -->
     <link rel="shortcut icon" href="/static/assets/images/favicon.png" />
+    <style>
+/* Bordered Tabs */
+.nav-tabs-bordered {
+  border-bottom: 2px solid #ebeef4;
+}
 
+.nav-tabs-bordered .nav-link {
+  margin-bottom: -2px;
+  border: none;
+  color: #2c384e;
+}
+
+.nav-tabs-bordered .nav-link:hover,
+.nav-tabs-bordered .nav-link:focus {
+  color: #4154f1;
+}
+
+.nav-tabs-bordered .nav-link.active {
+  background-color: #fff;
+  color: #4154f1;
+  border-bottom: 2px solid #4154f1;
+}
+  
+     
+  
+  
+    </style>
   </head>
   <body>
     <div class="container-scroller">
@@ -44,315 +76,179 @@
           <a class="sidebar-brand brand-logo" href="/"><img src="/static/assets/images/logo.svg" alt="logo" /></a>
           <a class="sidebar-brand brand-logo-mini" href="/"><img src="/static/assets/images/logo-mini.svg" alt="logo" /></a>
         </div>
+
         <ul class="nav">
           <li class="nav-item profile">
-            <div class="container ">
+            <div class="container">
               <div class="card profile-card">
                 <div class="card-body text-center">
-                  <div class="profile-container d-flex flex-column align-items-center">
+                  <div
+                    class="profile-container d-flex flex-column align-items-center"
+                  >
                     <div class="profile-pic mb-3">
                       <div class="count-indicator position-relative">
-                        <img class="img-fluid rounded-circle" src="{{user.profile_pictures}}" alt="Profile Picture" style="width: 100px; height: 100px;">
+                        <img
+                          class="img-fluid rounded-circle"
+                          src="{{user.profile_pictures}}"
+                          alt="Profile Picture"
+                          style="width: 100px; height: 100px"
+                        />
                       </div>
                     </div>
                     <div class="profile-name mb-3">
-                      <h5 class="mb-0 font-weight-normal">{{user.first_name}} {{user.last_name}}</h5>
+                      <h5 class="mb-0 font-weight-normal">
+                        {{user.first_name}} {{user.last_name}}
+                      </h5>
                     </div>
                     {% if user.employee_position %}
-                      <div class="employee-positions mt-3">
-                        {% for position in user.employee_position %}
-                          <div class="position-details mb-2">
-                            <span class="d-block">Department: <strong>{{ position.department.name }}</strong></span>
-                            <span class="d-block">Position: <strong>{{ position.position.name }}</strong></span>
-                          </div>
-                        {% endfor %}
+                    <div class="employee-positions mt-3">
+                      {% for position in user.employee_position %}
+                      <div class="position-details mb-2">
+                        <span class="d-block"
+                          >Dept :
+                          <strong>{{ position.department.name }}</strong></span
+                        >
+                        <span class="d-block"
+                          >Position :
+                          <strong>{{ position.position.name }}</strong></span
+                        >
                       </div>
+                      {% endfor %}
+                    </div>
                     {% else %}
-                      <p class="mt-3">No employee positions available.</p>
+                    <p class="mt-3">No employee positions available.</p>
                     {% endif %}
                   </div>
                 </div>
               </div>
             </div>
-
-            {% comment %} <div class="profile-desc">
-              <div class="container">
-                <div class="profile-container d-flex flex-column align-items-center">
-                  <div class="profile-pic mb-3">
-                    <div class="count-indicator position-relative">
-                      <img class="img-fluid rounded-circle" src="{{user.profile_pictures}}" alt="Profile Picture" style="width: 100px; height: 100px;">
-                     
-                    </div>
-                  </div>
-                  <div class="profile-name ">
-                    <h5 class="mb-0 font-weight-normal">{{user.first_name}} {{user.last_name}}</h5>
-                  </div>
-                </div>
-              </div>
-              
-              
-              
-            </div>
-            {% if user.employee_position %}
-                  {% for position in user.employee_position %}
-                    <div>
-                      <span class="nav-link">Department - {{ position.department.name }}</span>
-                      <span class="nav-link">Position - {{ position.position.name }}</span>
-                    </div>
-                  {% endfor %}
-                {% else %}
-                  <p>No employee positions available.</p>
-                {% endif %} {% endcomment %}
           </li>
-          
 
-          {% comment %} <li class="nav-item nav-category">
-            
-          </li> {% endcomment %}
-          
           <li class="nav-item nav-category">
             <span class="nav-link">Navigation</span>
           </li>
-          <li class="nav-item menu-items {% if request.path == '/' %}active{% endif %} ">
+          <li
+            class="nav-item menu-items {% if request.path == '/' %}active{% endif %}"
+          >
             <a class="nav-link" href="/">
               <span class="menu-icon"><i class="mdi mdi-speedometer"></i></span>
               <span class="menu-title">Dashboard</span>
             </a>
           </li>
-          <li class="nav-item menu-items {% if request.path == '/token/' %}active{% endif %}">
+          <li
+            class="nav-item menu-items {% if request.path == '/token/' %}active{% endif %}"
+          >
             <a class="nav-link" href="/token">
               <span class="menu-icon"><i class="mdi mdi-coin"></i></span>
               <span class="menu-title">Token System</span>
             </a>
           </li>
-          <li class="nav-item menu-items">
-            <a class="nav-link"
-              data-toggle="collapse"
-              href="#ui-order"
-              aria-expanded="{% if 'order' in request.path %}
-                true
-              {% else %}
-                false
-              {% endif %}"
-              aria-controls="ui-order">
-              <span class="menu-icon"><i class="mdi mdi-laptop"></i></span>
-              <span class="menu-title">Orders</span>
-              <i class="menu-arrow"></i>
+
+          <li
+            class="nav-item menu-items {% if request.path == '/order/' %}active{% endif %}"
+          >
+            <a class="nav-link" href="/order/">
+              <span class="menu-icon"><i class="mdi mdi-speedometer"></i></span>
+              <span class="menu-title">Order's</span>
             </a>
-            <div class="collapse {% if 'order' in request.path %}show{% endif %}" id="ui-order">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item {% if request.path == '/order/create/' %}active{% endif %}">
-                  <a class="nav-link" href="/order/create">
-                    <span class="menu-icon"><i class="mdi mdi-plus"></i></span>
-                    <span class="menu-title">Create Order</span>
-                  </a>
-                </li>
-                <li class="nav-item {% if request.path == '/order/update/' %}active{% endif %}">
-                  <a class="nav-link" href="/order/update">
-                    <span class="menu-icon"><i class="mdi mdi-apple-keyboard-caps"></i></span>
-                    <span class="menu-title">Update Order</span>
-                  </a>
-                </li>
-                <li class="nav-item {% if request.path == '/order/delete/' %}active{% endif %}">
-                  <a class="nav-link" href="/order/delete">
-                    <span class="menu-icon"><i class="mdi mdi-delete-sweep"></i></span>
-                    <span class="menu-title">Delete Order</span>
-                  </a>
-                </li>
-                <li class="nav-item {% if request.path == '/order/payment/' %}active{% endif %}">
-                  <a class="nav-link" href="/order/payment">
-                    <span class="menu-icon"><i class="mdi mdi-cash-multiple"></i></span>
-                    <span class="menu-title">Order Payment</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
           </li>
 
-          <li class="nav-item menu-items">
-            <a class="nav-link"
-              data-toggle="collapse"
-              href="#ui-emp"
-              aria-expanded="{% if 'employee' in request.path %}
-                true
-              {% else %}
-                false
-              {% endif %}"
-              aria-controls="ui-emp">
-              <span class="menu-icon"><i class="mdi mdi-laptop"></i></span>
-              <span class="menu-title">Employee</span>
-              <i class="menu-arrow"></i>
+          <li
+            class="nav-item menu-items {% if request.path == '/employee/' %}active{% endif %}"
+          >
+            <a class="nav-link" href="/employee">
+              <span class="menu-icon"><i class="mdi mdi-speedometer"></i></span>
+              <span class="menu-title">Employee's</span>
             </a>
-            <div class="collapse {% if 'employee' in request.path %}show{% endif %}" id="ui-emp">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item {% if request.path == '/employee/create/' %}active{% endif %}">
-                  <a class="nav-link" href="/employee/create">
-                    <span class="menu-icon"><i class="mdi mdi-plus"></i></span>
-                    <span class="menu-title">Create Employee</span>
-                  </a>
-                </li>
-                <li class="nav-item {% if request.path == '/employee/update/' %}active{% endif %}">
-                  <a class="nav-link" href="/employee/update">
-                    <span class="menu-icon"><i class="mdi mdi-apple-keyboard-caps"></i></span>
-                    <span class="menu-title">Update Employee</span>
-                  </a>
-                </li>
-                <li class="nav-item {% if request.path == '/employee/delete/' %}active{% endif %}">
-                  <a class="nav-link" href="/employee/delete">
-                    <span class="menu-icon"><i class="mdi mdi-delete-sweep"></i></span>
-                    <span class="menu-title">Delete Employee</span>
-                  </a>
-                </li>
-                <li class="nav-item {% if request.path == '/employee/payment/' %}active{% endif %}">
-                  <a class="nav-link" href="/employee/payment">
-                    <span class="menu-icon"><i class="mdi mdi-cash-multiple"></i></span>
-                    <span class="menu-title">Employee Payment</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
           </li>
-
-          <li class="nav-item menu-items">
-            <a class="nav-link"
-              data-toggle="collapse"
-              href="#ui-inventory"
-              aria-expanded="{% if 'inventory' in request.path %}
-                true
-              {% else %}
-                false
-              {% endif %}"
-              aria-controls="ui-inventory">
-              <span class="menu-icon"><i class="mdi mdi-laptop"></i></span>
+          <li
+            class="nav-item menu-items {% if request.path == '/inventory/' %}active{% endif %}"
+          >
+            <a class="nav-link" href="/inventory">
+              <span class="menu-icon"><i class="mdi mdi-speedometer"></i></span>
               <span class="menu-title">Inventory</span>
-              <i class="menu-arrow"></i>
             </a>
-            <div class="collapse {% if 'inventory' in request.path %}show{% endif %}" id="ui-inventory">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item {% if request.path == '/inventory/create/' %}active{% endif %}">
-                  <a class="nav-link" href="/inventory/create">
-                    <span class="menu-icon"><i class="mdi mdi-plus"></i></span>
-                    <span class="menu-title">Create Inventory</span>
-                  </a>
-                </li>
-                <li class="nav-item {% if request.path == '/inventory/update/' %}active{% endif %}">
-                  <a class="nav-link" href="/inventory/update">
-                    <span class="menu-icon"><i class="mdi mdi-apple-keyboard-caps"></i></span>
-                    <span class="menu-title">Update Inventory</span>
-                  </a>
-                </li>
-                <li class="nav-item {% if request.path == '/inventory/delete/' %}active{% endif %}">
-                  <a class="nav-link" href="/inventory/delete">
-                    <span class="menu-icon"><i class="mdi mdi-delete-sweep"></i></span>
-                    <span class="menu-title">Delete Inventory</span>
-                  </a>
-                </li>
-                <li class="nav-item {% if request.path == '/inventory/payment/' %}active{% endif %}">
-                  <a class="nav-link" href="/inventory/payment">
-                    <span class="menu-icon"><i class="mdi mdi-cash-multiple"></i></span>
-                    <span class="menu-title">Inventory Payment</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link {% if request.path == 'pages/ui-features/typography.html' %}active{% endif %}" href="pages/ui-features/typography.html">Typography</a>
-                </li>
-              </ul>
-            </div>
+          </li>
+          <li
+            class="nav-item menu-items {% if request.path == '/menu/' %}active{% endif %}"
+          >
+            <a class="nav-link" href="/menu">
+              <span class="menu-icon"><i class="mdi mdi-speedometer"></i></span>
+              <span class="menu-title">Menu</span>
+            </a>
           </li>
 
-          <li class="nav-item menu-items {% if request.path == '/id_generator/' %}active{% endif %}">
+          <li
+            class="nav-item menu-items {% if request.path == '/id_generator/' %}active{% endif %}"
+          >
             <a class="nav-link" href="/id_generator">
-              <span class="menu-icon"><i class="mdi mdi-playlist-play"></i></span>
+              <span class="menu-icon"
+                ><i class="mdi mdi-playlist-play"></i
+              ></span>
               <span class="menu-title">ID GENERATOR</span>
             </a>
           </li>
 
-          <li class="nav-item menu-items">
-            <a class="nav-link"
-              data-toggle="collapse"
-              href="#ui-menu"
-              aria-expanded="{% if 'menu' in request.path %}
-                true
-              {% else %}
-                false
-              {% endif %}"
-              aria-controls="ui-menu">
-              <span class="menu-icon"><i class="mdi mdi-laptop"></i></span>
-              <span class="menu-title">menu</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse {% if 'menu' in request.path %}show{% endif %}" id="ui-menu">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item {% if request.path == '/menu/create/' %}active{% endif %}">
-                  <a class="nav-link" href="/menu/create">
-                    <span class="menu-icon"><i class="mdi mdi-plus"></i></span>
-                    <span class="menu-title">Create Menu</span>
-                  </a>
-                </li>
-                <li class="nav-item {% if request.path == '/menu/update/' %}active{% endif %}">
-                  <a class="nav-link" href="/menu/update">
-                    <span class="menu-icon"><i class="mdi mdi-apple-keyboard-caps"></i></span>
-                    <span class="menu-title">Update Menu</span>
-                  </a>
-                </li>
-                <li class="nav-item {% if request.path == '/menu/delete/' %}active{% endif %}">
-                  <a class="nav-link" href="/menu/delete">
-                    <span class="menu-icon"><i class="mdi mdi-delete-sweep"></i></span>
-                    <span class="menu-title">Delete Menu</span>
-                  </a>
-                </li>
-                <li class="nav-item {% if request.path == '/menu/payment/' %}active{% endif %}">
-                  <a class="nav-link" href="/menu/payment">
-                    <span class="menu-icon"><i class="mdi mdi-cash-multiple"></i></span>
-                    <span class="menu-title">Menu Payment</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="nav-item menu-items {% if request.path == '/billing/' %}active{% endif %}">
+          <li
+            class="nav-item menu-items {% if request.path == '/billing/' %}active{% endif %}"
+          >
             <a class="nav-link" href="/billing">
               <span class="menu-icon"><i class="mdi mdi-chart-bar"></i></span>
               <span class="menu-title">Billing</span>
             </a>
           </li>
-          <li class="nav-item menu-items {% if request.path == '/erp/' %}active{% endif %}">
+          <li
+            class="nav-item menu-items {% if request.path == '/erp/' %}active{% endif %}"
+          >
             <a class="nav-link" href="/erp">
               <span class="menu-icon"><i class="mdi mdi-contacts"></i></span>
               <span class="menu-title">ERP</span>
             </a>
           </li>
-         
-         
         </ul>
       </nav>
-      <!-- partial -->
+
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar p-0 fixed-top d-flex flex-row">
-          <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="/static/assets/images/logo-mini.svg" alt="logo" /></a>
+          <div
+            class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center"
+          >
+            <a class="navbar-brand brand-logo-mini" href="index.html">
+              <span class="brand-text">The Ultimate Manager</span>
+            </a>
           </div>
-          <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
-            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize"><span class="mdi mdi-menu"></span></button>
-            {% comment %} <ul class="navbar-nav w-100">
-              <li class="nav-item w-100">
-                <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
-                  <input type="text" class="form-control" placeholder="Search products" />
-                </form>
-              </li>
-              
-            </ul> {% endcomment %}
 
-            <marquee class="navbar-nav w-100 text-primary font-weight-bold" behavior="scroll" direction="left">
+          <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
+            <button
+              class="navbar-toggler navbar-toggler align-self-center"
+              type="button"
+              data-toggle="minimize"
+            >
+              <span class="mdi mdi-menu"></span>
+            </button>
+            <marquee
+              class="navbar-nav w-100 text-primary font-weight-bold"
+              behavior="scroll"
+              direction="left"
+            >
               Welcome to our website! Check out our latest products and offers.
             </marquee>
-            
+
             <ul class="navbar-nav navbar-nav-right">
               <li class="nav-item dropdown d-none d-lg-block">
-                <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-toggle="dropdown" aria-expanded="false" href="/send_mail">+ Create New Project</a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="createbuttonDropdown">
+                <a
+                  class="nav-link btn btn-success create-new-button"
+                  id="createbuttonDropdown"
+                  data-toggle="dropdown"
+                  aria-expanded="false"
+                  href="/send_mail"
+                  >+ Create New Project</a
+                >
+                <div
+                  class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                  aria-labelledby="createbuttonDropdown"
+                >
                   <h6 class="p-3 mb-0">Projects</h6>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item preview-item">
@@ -362,7 +258,9 @@
                       </div>
                     </div>
                     <div class="preview-item-content">
-                      <p class="preview-subject ellipsis mb-1">Software Development</p>
+                      <p class="preview-subject ellipsis mb-1">
+                        Software Development
+                      </p>
                     </div>
                   </a>
                   <div class="dropdown-divider"></div>
@@ -373,7 +271,9 @@
                       </div>
                     </div>
                     <div class="preview-item-content">
-                      <p class="preview-subject ellipsis mb-1">UI Development</p>
+                      <p class="preview-subject ellipsis mb-1">
+                        UI Development
+                      </p>
                     </div>
                   </a>
                   <div class="dropdown-divider"></div>
@@ -384,87 +284,81 @@
                       </div>
                     </div>
                     <div class="preview-item-content">
-                      <p class="preview-subject ellipsis mb-1">Software Testing</p>
+                      <p class="preview-subject ellipsis mb-1">
+                        Software Testing
+                      </p>
                     </div>
                   </a>
                   <div class="dropdown-divider"></div>
                   <p class="p-3 mb-0 text-center">See all projects</p>
                 </div>
-
-
-                {% comment %} <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
-              <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
-                <a href="#" class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-dark rounded-circle">
-                      <i class="mdi mdi-settings text-primary"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-dark rounded-circle">
-                      <i class="mdi mdi-onepassword text-info"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1 text-small">Change Password</p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-dark rounded-circle">
-                      <i class="mdi mdi-calendar-today text-success"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1 text-small">To-do list</p>
-                  </div>
-                </a>
-              </div> {% endcomment %}
               </li>
               <li class="nav-item nav-settings d-none d-lg-block">
-                <a class="nav-link" href="#"><i class="mdi mdi-view-grid"></i></a>
+                <a class="nav-link" href="#"
+                  ><i class="mdi mdi-view-grid"></i
+                ></a>
               </li>
               <li class="nav-item dropdown border-left">
-                <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                <a
+                  class="nav-link count-indicator dropdown-toggle"
+                  id="messageDropdown"
+                  href="#"
+                  data-toggle="dropdown"
+                  aria-expanded="false"
+                >
                   <i class="mdi mdi-email"></i>
                   <span class="count bg-success"></span>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
+                <div
+                  class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                  aria-labelledby="messageDropdown"
+                >
                   <h6 class="p-3 mb-0">Messages</h6>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item preview-item">
                     <div class="preview-thumbnail">
-                      <img src="/static/assets/images/faces/face4.jpg" alt="image" class="rounded-circle profile-pic" />
+                      <img
+                        src="/static/assets/images/faces/face4.jpg"
+                        alt="image"
+                        class="rounded-circle profile-pic"
+                      />
                     </div>
                     <div class="preview-item-content">
-                      <p class="preview-subject ellipsis mb-1">Mark send you a message</p>
+                      <p class="preview-subject ellipsis mb-1">
+                        Mark send you a message
+                      </p>
                       <p class="text-muted mb-0">1 Minutes ago</p>
                     </div>
                   </a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item preview-item">
                     <div class="preview-thumbnail">
-                      <img src="/static/assets/images/faces/face2.jpg" alt="image" class="rounded-circle profile-pic" />
+                      <img
+                        src="/static/assets/images/faces/face2.jpg"
+                        alt="image"
+                        class="rounded-circle profile-pic"
+                      />
                     </div>
                     <div class="preview-item-content">
-                      <p class="preview-subject ellipsis mb-1">Cregh send you a message</p>
+                      <p class="preview-subject ellipsis mb-1">
+                        Cregh send you a message
+                      </p>
                       <p class="text-muted mb-0">15 Minutes ago</p>
                     </div>
                   </a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item preview-item">
                     <div class="preview-thumbnail">
-                      <img src="/static/assets/images/faces/face3.jpg" alt="image" class="rounded-circle profile-pic" />
+                      <img
+                        src="/static/assets/images/faces/face3.jpg"
+                        alt="image"
+                        class="rounded-circle profile-pic"
+                      />
                     </div>
                     <div class="preview-item-content">
-                      <p class="preview-subject ellipsis mb-1">Profile picture updated</p>
+                      <p class="preview-subject ellipsis mb-1">
+                        Profile picture updated
+                      </p>
                       <p class="text-muted mb-0">18 Minutes ago</p>
                     </div>
                   </a>
@@ -473,11 +367,19 @@
                 </div>
               </li>
               <li class="nav-item dropdown border-left">
-                <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+                <a
+                  class="nav-link count-indicator dropdown-toggle"
+                  id="notificationDropdown"
+                  href="#"
+                  data-toggle="dropdown"
+                >
                   <i class="mdi mdi-bell"></i>
                   <span class="count bg-danger"></span>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                <div
+                  class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                  aria-labelledby="notificationDropdown"
+                >
                   <h6 class="p-3 mb-0">Notifications</h6>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item preview-item">
@@ -488,7 +390,9 @@
                     </div>
                     <div class="preview-item-content">
                       <p class="preview-subject mb-1">Event today</p>
-                      <p class="text-muted ellipsis mb-0">Just a reminder that you have an event today</p>
+                      <p class="text-muted ellipsis mb-0">
+                        Just a reminder that you have an event today
+                      </p>
                     </div>
                   </a>
                   <div class="dropdown-divider"></div>
@@ -520,14 +424,28 @@
                 </div>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
+                <a
+                  class="nav-link"
+                  id="profileDropdown"
+                  href="#"
+                  data-toggle="dropdown"
+                >
                   <div class="navbar-profile">
-                    <img class="img-xs rounded-circle" src="{{user.profile_pictures}}" alt="" />
-                    <p class="mb-0 d-none d-sm-block navbar-profile-name">{{user.first_name}} {{user.last_name}}</p>
+                    <img
+                      class="img-xs rounded-circle"
+                      src="{{user.profile_pictures}}"
+                      alt=""
+                    />
+                    <p class="mb-0 d-none d-sm-block navbar-profile-name">
+                      {{user.first_name}} {{user.last_name}}
+                    </p>
                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                   </div>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
+                <div
+                  class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                  aria-labelledby="profileDropdown"
+                >
                   <h6 class="p-3 mb-0">Profile</h6>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item preview-item">
@@ -541,11 +459,20 @@
                     </div>
                   </a>
                   <div class="dropdown-divider"></div>
-                  <form id="logout-form" action="{% url 'logout' %}" method="POST" style="display: none">
+                  <form
+                    id="logout-form"
+                    action="{% url 'logout' %}"
+                    method="POST"
+                    style="display: none"
+                  >
                     {% csrf_token %}
                   </form>
 
-                  <a class="dropdown-item preview-item" href="#" onclick="handleLogout();">
+                  <a
+                    class="dropdown-item preview-item"
+                    href="#"
+                    onclick="handleLogout();"
+                  >
                     <div class="preview-thumbnail">
                       <div class="preview-icon bg-dark rounded-circle">
                         <i class="mdi mdi-logout text-danger"></i>
@@ -561,8 +488,14 @@
                 </div>
               </li>
             </ul>
-            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas"><span class="mdi mdi-format-line-spacing"></span></button>
+            <button
+              class="navbar-toggler navbar-toggler-right d-lg-none align-self-center"
+              type="button"
+              data-toggle="offcanvas"
+            >
+              <span class="mdi mdi-format-line-spacing"></span>
+            </button>
           </div>
         </nav>
-        <div class="main-panel">
-          <div class="content-wrapper" style="overflow:auto; height:80vh">
+        <div class="main-panel" style="overflow: auto; height: 99vh">
+          
