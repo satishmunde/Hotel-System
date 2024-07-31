@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Corona Admin</title>
+    <title>The Ultimate Manager</title>
     {% comment %}
     {% if request.path == '/aboutus' %}
       <link rel="stylesheet" href="/static/team.css" />
@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="/static/assets/css/style.css" />
     <!-- End layout styles -->
     <link rel="shortcut icon" href="/static/assets/images/favicon.png" />
+
   </head>
   <body>
     <div class="container-scroller">
@@ -45,54 +46,70 @@
         </div>
         <ul class="nav">
           <li class="nav-item profile">
-            <div class="profile-desc">
-              <div class="profile-pic">
-                <div class="count-indicator">
-                  <img class="img-xs rounded-circle" src="/static/assets/images/faces/face15.jpg" alt="" />
-                  <span class="count bg-success"></span>
+            <div class="container ">
+              <div class="card profile-card">
+                <div class="card-body text-center">
+                  <div class="profile-container d-flex flex-column align-items-center">
+                    <div class="profile-pic mb-3">
+                      <div class="count-indicator position-relative">
+                        <img class="img-fluid rounded-circle" src="{{user.profile_pictures}}" alt="Profile Picture" style="width: 100px; height: 100px;">
+                      </div>
+                    </div>
+                    <div class="profile-name mb-3">
+                      <h5 class="mb-0 font-weight-normal">{{user.first_name}} {{user.last_name}}</h5>
+                    </div>
+                    {% if user.employee_position %}
+                      <div class="employee-positions mt-3">
+                        {% for position in user.employee_position %}
+                          <div class="position-details mb-2">
+                            <span class="d-block">Department: <strong>{{ position.department.name }}</strong></span>
+                            <span class="d-block">Position: <strong>{{ position.position.name }}</strong></span>
+                          </div>
+                        {% endfor %}
+                      </div>
+                    {% else %}
+                      <p class="mt-3">No employee positions available.</p>
+                    {% endif %}
+                  </div>
                 </div>
-                <div class="profile-name">
-                  <h5 class="mb-0 font-weight-normal">Satish Munde</h5>
-                  <span>Gold Member</span>
-                </div>
-              </div>
-              <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
-              <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
-                <a href="#" class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-dark rounded-circle">
-                      <i class="mdi mdi-settings text-primary"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-dark rounded-circle">
-                      <i class="mdi mdi-onepassword text-info"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1 text-small">Change Password</p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-dark rounded-circle">
-                      <i class="mdi mdi-calendar-today text-success"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1 text-small">To-do list</p>
-                  </div>
-                </a>
               </div>
             </div>
+
+            {% comment %} <div class="profile-desc">
+              <div class="container">
+                <div class="profile-container d-flex flex-column align-items-center">
+                  <div class="profile-pic mb-3">
+                    <div class="count-indicator position-relative">
+                      <img class="img-fluid rounded-circle" src="{{user.profile_pictures}}" alt="Profile Picture" style="width: 100px; height: 100px;">
+                     
+                    </div>
+                  </div>
+                  <div class="profile-name ">
+                    <h5 class="mb-0 font-weight-normal">{{user.first_name}} {{user.last_name}}</h5>
+                  </div>
+                </div>
+              </div>
+              
+              
+              
+            </div>
+            {% if user.employee_position %}
+                  {% for position in user.employee_position %}
+                    <div>
+                      <span class="nav-link">Department - {{ position.department.name }}</span>
+                      <span class="nav-link">Position - {{ position.position.name }}</span>
+                    </div>
+                  {% endfor %}
+                {% else %}
+                  <p>No employee positions available.</p>
+                {% endif %} {% endcomment %}
           </li>
+          
+
+          {% comment %} <li class="nav-item nav-category">
+            
+          </li> {% endcomment %}
+          
           <li class="nav-item nav-category">
             <span class="nav-link">Navigation</span>
           </li>
@@ -373,6 +390,43 @@
                   <div class="dropdown-divider"></div>
                   <p class="p-3 mb-0 text-center">See all projects</p>
                 </div>
+
+
+                {% comment %} <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
+              <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
+                <a href="#" class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-dark rounded-circle">
+                      <i class="mdi mdi-settings text-primary"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content">
+                    <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>
+                  </div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-dark rounded-circle">
+                      <i class="mdi mdi-onepassword text-info"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content">
+                    <p class="preview-subject ellipsis mb-1 text-small">Change Password</p>
+                  </div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-dark rounded-circle">
+                      <i class="mdi mdi-calendar-today text-success"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content">
+                    <p class="preview-subject ellipsis mb-1 text-small">To-do list</p>
+                  </div>
+                </a>
+              </div> {% endcomment %}
               </li>
               <li class="nav-item nav-settings d-none d-lg-block">
                 <a class="nav-link" href="#"><i class="mdi mdi-view-grid"></i></a>
@@ -468,8 +522,8 @@
               <li class="nav-item dropdown">
                 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                   <div class="navbar-profile">
-                    <img class="img-xs rounded-circle" src="/static/assets/images/faces/face15.jpg" alt="" />
-                    <p class="mb-0 d-none d-sm-block navbar-profile-name">Henry Klein</p>
+                    <img class="img-xs rounded-circle" src="{{user.profile_pictures}}" alt="" />
+                    <p class="mb-0 d-none d-sm-block navbar-profile-name">{{user.first_name}} {{user.last_name}}</p>
                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                   </div>
                 </a>

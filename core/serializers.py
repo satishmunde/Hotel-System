@@ -3,8 +3,9 @@ from djoser.serializers import UserCreateSerializer as BaseUserCreateSerializer
 from djoser.serializers import UserSerializer as BaseUserSerializer
 from rest_framework import serializers
 from .models import LoginSystem
-from employees.models import Document
-from employees.serializers import DocumentSerializer
+from employees.models import Document,EmployeePosition
+from employees.serializers import DocumentSerializer,EmployeePositionSerializer
+
 import re
 
 
@@ -14,6 +15,8 @@ from django.contrib.auth.models import Group  # Example import
 
 class LoginSystemSerializer(BaseUserSerializer,serializers.ModelSerializer):
     documents = serializers.SerializerMethodField()
+    employee_position = serializers.SerializerMethodField()
+    
     groups = serializers.PrimaryKeyRelatedField(queryset=Group.objects.all(), many=True, required=False)  # Example
 
     def __init__(self, *args, **kwargs):
@@ -23,7 +26,7 @@ class LoginSystemSerializer(BaseUserSerializer,serializers.ModelSerializer):
         fields_for_post = [field.name for field in LoginSystem._meta.fields if field.name not in [
             'emp_id', 'last_updated', 'created_at', 'password', 'access_token', 'refresh_token']]
         fields_for_get = [field.name for field in LoginSystem._meta.fields if field.name not in [
-            'password']] + ['documents']
+            'password']] + ['documents','employee_position']
         fields_for_put = [field.name for field in LoginSystem._meta.fields if field.name not in [
             'last_updated', 'created_at', 'password', 'last_login', 'is_superuser', 'is_staff', 'date_joined', 
             'access_token', 'refresh_token', 'is_active', 'is_doc_uploaded']]
@@ -36,6 +39,8 @@ class LoginSystemSerializer(BaseUserSerializer,serializers.ModelSerializer):
             fields_to_keep = fields_for_put
         else:
             fields_to_keep = None
+            
+        print(request_method)
 
         if fields_to_keep is not None:
             self.fields = {field_name: self.fields[field_name] for field_name in fields_to_keep if field_name in self.fields}
@@ -56,6 +61,10 @@ class LoginSystemSerializer(BaseUserSerializer,serializers.ModelSerializer):
     def get_documents(self, obj):
         documents = Document.objects.filter(employee=obj)
         return DocumentSerializer(documents, many=True).data
+    
+    def get_employee_position(self, obj):
+        employee_position = EmployeePosition.objects.filter(employee=obj)
+        return EmployeePositionSerializer(employee_position, many=True).data
 
     def update(self, instance, validated_data):
         # Handle many-to-many fields separately

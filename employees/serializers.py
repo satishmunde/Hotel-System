@@ -164,8 +164,9 @@ class EmployeePositionSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("An EmployeePosition with this employee, department, and position already exists.")
 
         return data
-    
-
+    # Use the nested serializer for employee
+    department = DepartmentSerializer()  # Use the nested serializer for department
+    position = PositionSerializer()
     class Meta:
         model = EmployeePosition
         fields = '__all__'

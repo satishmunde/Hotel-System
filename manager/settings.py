@@ -227,7 +227,7 @@ REDOC_SETTINGS = {
 }
 
 # settings.py
-LOGIN_URL = '/login/'  # Adjust this URL according to your login page URL
+LOGIN_URL = '/login/?next=/'  # Adjust this URL according to your login page URL
 
 
 # settings.py

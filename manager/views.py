@@ -1,83 +1,115 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.conf import settings
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from rest_framework import status
 from django.contrib.auth.decorators import login_required
-from rest_framework.response import Response
+
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.views import LogoutView
 from django.utils.decorators import method_decorator
 from core.models import LoginSystem
+from core.serializers import LoginSystemSerializer
+from django.views.decorators.csrf import csrf_exempt
 
-
+import json
 
 @login_required
 def home(request):
-    return render(request, 'index.html')
+    
+    
+    user = request.session['user'] 
+    print(user)
+
+    return render(request, 'index.html' , {'user':user})
 
 @login_required
 def employee(request):
-    return render(request, 'employee.html')
+    user = request.session['user'] 
+    
+    
+    return render(request, 'employee.html',{'user':user})
 
 @login_required
 def erp(request):
-    return render(request, 'erp.html')
+    user = request.session['user'] 
+    
+    return render(request, 'erp.html',{'user':user})
 
 
 @login_required
 def menu(request):
-    return render(request, 'menu.html')
+    user = request.session['user'] 
+
+    return render(request, 'menu.html',{'user':user})
 
 @login_required
 def billing(request):
-    return render(request, 'billing.html')
+    user = request.session['user'] 
+    return render(request, 'billing.html' ,{'user':user})
 
 @login_required
 def id_generator(request):
-    return render(request, 'id_generator.html')
+    user = request.session['user'] 
+    return render(request, 'id_generator.html' ,{'user':user})
 
 @login_required
 def order(request):
-    return render(request, 'order.html')
+    user = request.session['user'] 
+    return render(request, 'order.html' ,{'user':user})
 
 @login_required
 def inventory(request):
-    return render(request, 'inventory.html')
+    user = request.session['user'] 
+    return render(request, 'inventory.html' ,{'user':user})
 
 @login_required
 def token(request):
-    return render(request, 'token.html')
+    user = request.session['user'] 
+    return render(request, 'token.html' ,{'user':user})
 
+@csrf_exempt
 def login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        
-        user = authenticate(username=username, password=password)
-        
-        if user is not None:
-            # Log in the user
-            auth_login(request, user)
-            
-            refresh = RefreshToken.for_user(user)
-            create_token(user,refresh)
-            request.session['access_token'] = str(refresh.access_token)
-            request.session['refresh_token'] = str(refresh)
-            request.session['success_message'] = 'Login successful!'
-
-
-            next_url = request.GET.get('next', '/')
-            
-            # Redirect to the 'next' URL or to the home page
-            return redirect(next_url)
+        data = json.loads(request.body)
+        access_token = data.get('access_token')
+        if access_token:
+            if request.session.get('access_token') == access_token:
+                next_url = request.GET.get('next', '/')
+                return JsonResponse({'next': next_url, 'status': 302}, status=302)
+            else:
+                return JsonResponse({'detail': 'Invalid access token'}, status=status.HTTP_401_UNAUTHORIZED)
         else:
-            return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+          
+            username = data.get('username')
+            password = data.get('password')
+            user = authenticate(username=username, password=password)
     
+            if user is not None:
+                # Log in the user
+                auth_login(request, user)
+                refresh = RefreshToken.for_user(user)
+                access_token = str(refresh.access_token)
+                request.method = 'GET'
+                user_data = LoginSystemSerializer(user, context={'request': request}).data
+                request.method = 'POST'
+                request.session['access_token'] = access_token
+                request.session['refresh_token'] = str(refresh)
+                request.session['user'] = user_data
+                response_data = {
+                'access_token': access_token,
+                'refresh_token': str(refresh),
+                }
+                return JsonResponse({'detail': 'Login Successful', 'data': response_data, 'status': 200}, status=status.HTTP_200_OK)
+            else:
+                return JsonResponse({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+    # Render login page for GET requests
     return render(request, 'login.html')
+
 
 def create_token(user,refresh):
     try:
