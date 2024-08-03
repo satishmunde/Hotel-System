@@ -1,5 +1,7 @@
-from rest_framework import viewsets, status
+# viewsets.py
+from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import InventoryItem, Supplier, PurchaseOrder, PurchaseOrderItem, Expense
 from .serializers import (
     InventoryItemSerializer,
@@ -8,13 +10,23 @@ from .serializers import (
     PurchaseOrderItemSerializer,
     ExpenseSerializer
 )
+from .filters import (
+    InventoryItemFilter,
+    SupplierFilter,
+    PurchaseOrderFilter,
+    PurchaseOrderItemFilter,
+    ExpenseFilter
+)
 
 class InventoryItemViewSet(viewsets.ModelViewSet):
     queryset = InventoryItem.objects.all()
     serializer_class = InventoryItemSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = InventoryItemFilter
+    permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request):
-        queryset = self.get_queryset()
+        queryset = self.filter_queryset(self.get_queryset()).filter()
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -45,9 +57,12 @@ class InventoryItemViewSet(viewsets.ModelViewSet):
 class SupplierViewSet(viewsets.ModelViewSet):
     queryset = Supplier.objects.all()
     serializer_class = SupplierSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = SupplierFilter
+    permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request):
-        queryset = self.get_queryset()
+        queryset = self.filter_queryset(self.get_queryset()).filter()
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -78,9 +93,12 @@ class SupplierViewSet(viewsets.ModelViewSet):
 class PurchaseOrderViewSet(viewsets.ModelViewSet):
     queryset = PurchaseOrder.objects.all()
     serializer_class = PurchaseOrderSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = PurchaseOrderFilter
+    permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request):
-        queryset = self.get_queryset()
+        queryset = self.filter_queryset(self.get_queryset()).filter()
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -111,9 +129,12 @@ class PurchaseOrderViewSet(viewsets.ModelViewSet):
 class PurchaseOrderItemViewSet(viewsets.ModelViewSet):
     queryset = PurchaseOrderItem.objects.all()
     serializer_class = PurchaseOrderItemSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = PurchaseOrderItemFilter
+    permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request):
-        queryset = self.get_queryset()
+        queryset = self.filter_queryset(self.get_queryset()).filter()
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -144,9 +165,12 @@ class PurchaseOrderItemViewSet(viewsets.ModelViewSet):
 class ExpenseViewSet(viewsets.ModelViewSet):
     queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = ExpenseFilter
+    permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request):
-        queryset = self.get_queryset()
+        queryset = self.filter_queryset(self.get_queryset()).filter()
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 

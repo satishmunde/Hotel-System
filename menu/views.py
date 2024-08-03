@@ -1,17 +1,20 @@
-from rest_framework import viewsets, status
+# viewsets.py
+from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Category, MenuItem
 from .serializers import CategorySerializer, MenuItemSerializer
-from rest_framework import permissions
+from .filters import CategoryFilter, MenuItemFilter
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [permissions.IsAuthenticated]
-
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = CategoryFilter
 
     def list(self, request):
-        queryset = self.get_queryset()
+        queryset = self.filter_queryset(self.get_queryset()).filter()
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -43,9 +46,11 @@ class MenuItemViewSet(viewsets.ModelViewSet):
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = MenuItemFilter
 
     def list(self, request):
-        queryset = self.get_queryset()
+        queryset = self.filter_queryset(self.get_queryset()).filter()
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 

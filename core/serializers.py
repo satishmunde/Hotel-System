@@ -40,7 +40,6 @@ class LoginSystemSerializer(BaseUserSerializer,serializers.ModelSerializer):
         else:
             fields_to_keep = None
             
-        print(request_method)
 
         if fields_to_keep is not None:
             self.fields = {field_name: self.fields[field_name] for field_name in fields_to_keep if field_name in self.fields}
@@ -229,7 +228,7 @@ class UserCreateSerializer(BaseUserCreateSerializer):
 
     def validate_first_name(self, value):
         
-        print('called')
+
         value = value.strip()
         if not value:
             raise serializers.ValidationError("First name is required.")
@@ -253,7 +252,7 @@ class UserCreateSerializer(BaseUserCreateSerializer):
 
     def validate_email(self, value):
         
-        print('called date')
+
         value = value.strip()
         if not value:
             raise serializers.ValidationError("Email is required.")

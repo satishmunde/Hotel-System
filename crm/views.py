@@ -1,19 +1,20 @@
 # crmapp/views.py
-from rest_framework import viewsets
+from rest_framework import viewsets, status, permissions
+from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Customer
 from .serializers import CustomerSerializer
-from rest_framework.response import Response  
-# viewsets.py
-from rest_framework import viewsets, status
-from rest_framework.response import Response
+from .filters import CustomerFilter  # Import the filter class
 
 class CustomerViewSet(viewsets.ModelViewSet):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
-
+    permission_classes = [permissions.IsAuthenticated]  # Add permissions
+    filter_backends = [DjangoFilterBackend]  # Add filtering
+    filterset_class = CustomerFilter  # Use the filter class
 
     def list(self, request):
-        queryset = self.get_queryset()
+        queryset = self.filter_queryset(self.get_queryset()).filter()
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 

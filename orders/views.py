@@ -1,16 +1,20 @@
-from rest_framework import viewsets, status
+# viewsets.py
+from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Order, OrderItem
 from .serializers import OrderSerializer, OrderItemSerializer
-from rest_framework import permissions
+from .filters import OrderFilter, OrderItemFilter
 
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = OrderFilter
 
     def list(self, request):
-        queryset = self.get_queryset()
+        queryset = self.filter_queryset(self.get_queryset()).filter()
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -42,9 +46,11 @@ class OrderItemViewSet(viewsets.ModelViewSet):
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = OrderItemFilter
 
     def list(self, request):
-        queryset = self.get_queryset()
+        queryset = self.filter_queryset(self.get_queryset()).filter()
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 

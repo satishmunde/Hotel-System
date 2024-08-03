@@ -1,10 +1,11 @@
-# # urls.py
+# # in your project's urls.py (e.g., myproject/urls.py)
+# from django.urls import path, include
+# from rest_framework.routers import DefaultRouter
+# from .views import LoginSystemViewSet
 
-# from django.urls import path
-# from .views import FilteredUserListView,FriendRequestListView,MemberListView
+# router = DefaultRouter()
+# router.register(r'emps', LoginSystemViewSet)
 
 # urlpatterns = [
-#     path('', FilteredUserListView.as_view(), name='filtered-users'),
-#     path('members/', MemberListView.as_view(), name='connected-users'),
-#     path('friendrequest/', FriendRequestListView.as_view(), name='friendrequest-users'),
+#     path('', include(router.urls)),
 # ]

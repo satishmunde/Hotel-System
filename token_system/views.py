@@ -1,14 +1,20 @@
-from rest_framework import viewsets
-from .models import TokenOrderItem, TokenOrder
+# viewsets.py
+from rest_framework import viewsets, status, permissions
+from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
+from .models import TokenOrder, TokenOrderItem
 from .serializers import TokenOrderSerializer, TokenOrderItemSerializer
-from rest_framework.response import Response  
-from rest_framework import status
+from .filters import TokenOrderFilter, TokenOrderItemFilter
+
 class TokenOrderViewSet(viewsets.ModelViewSet):
     queryset = TokenOrder.objects.all()
     serializer_class = TokenOrderSerializer
+    permission_classes = [permissions.IsAuthenticated]  # Add permissions
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = TokenOrderFilter  # Add filtering
 
     def list(self, request):
-        queryset = self.get_queryset()
+        queryset = self.filter_queryset(self.get_queryset()).filter()
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -39,9 +45,12 @@ class TokenOrderViewSet(viewsets.ModelViewSet):
 class TokenOrderItemViewSet(viewsets.ModelViewSet):
     queryset = TokenOrderItem.objects.all()
     serializer_class = TokenOrderItemSerializer
+    permission_classes = [permissions.IsAuthenticated]  # Add permissions
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = TokenOrderItemFilter  # Add filtering
 
     def list(self, request):
-        queryset = self.get_queryset()
+        queryset = self.filter_queryset(self.get_queryset()).filter()
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 

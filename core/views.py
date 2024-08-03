@@ -1,21 +1,31 @@
-from rest_framework import viewsets
+
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
 from .models import LoginSystem
 from .serializers import LoginSystemSerializer
-from rest_framework import viewsets, status
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import viewsets, status, permissions
+from .models import LoginSystem
+from .filters import LoginSystemFilter  # Import filter class if needed
 
 class LoginSystemViewSet(viewsets.ModelViewSet):
     queryset = LoginSystem.objects.all()
     serializer_class = LoginSystemSerializer
+    permission_classes = [permissions.IsAuthenticated]  # Add permissions
+    filter_backends = [DjangoFilterBackend]  # Add filtering
+    filterset_class = LoginSystemFilter  # Use the filter class if needed
 
     def list(self, request):
-        queryset = self.get_queryset()
+        queryset = self.filter_queryset(self.get_queryset()).filter()
+        print(queryset.query)  # Print the SQL query to check if filtering is applied
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
+
+
     def retrieve(self, request, pk=None):
+        
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
@@ -38,4 +48,4 @@ class LoginSystemViewSet(viewsets.ModelViewSet):
         instance = self.get_object()
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
-
+ 

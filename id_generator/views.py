@@ -1,15 +1,21 @@
 # viewsets.py
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from .models import Identity_Card
+from .models import Identity_Card 
 from .serializers import IDCardSerializer
+from rest_framework import permissions
+from .filters import Identity_CardFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 class IDCardViewSet(viewsets.ModelViewSet):
     queryset = Identity_Card.objects.all()
     serializer_class = IDCardSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = Identity_CardFilter
+    permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request):
-        queryset = self.get_queryset()
+        queryset = self.filter_queryset(self.get_queryset()).filter()
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
