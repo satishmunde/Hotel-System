@@ -17,7 +17,7 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path ,include
-from . import views
+from . import views,menu_viewset,token_viewset,billing_viewset,employee_viewset,erp_viewset, id_generator_viewset,inventory_viewset,order_viewset
 from django.conf.urls.static import static
 import debug_toolbar
 from drf_yasg import openapi
@@ -43,68 +43,79 @@ schema_view = get_schema_view(
 
 
 urlpatterns = [
-    # Other URL patterns
+    # URL pattern for api Dacumentations 
     path('swagger<format>/', login_required(schema_view.without_ui(cache_timeout=0)), name='schema-json'),
     path('swagger/', login_required(schema_view.with_ui('swagger', cache_timeout=0)), name='schema-swagger-ui'),
     path('redoc/', login_required(schema_view.with_ui('redoc', cache_timeout=0)), name='schema-redoc'),
+    
+    
+    # URL for  Admin panel 
     path("admin/", admin.site.urls),
+    
+    # URL for Debug toolbar
      
     path('__debug__/', include(debug_toolbar.urls)),
     
-    path('api/menu/', include('menu.urls')),
-    path('api/orders/', include('orders.urls')),
-    path('api/employees/', include('employees.urls')),
-    path('api/crm/', include('crm.urls')),
-    path('api/id_generator/', include('id_generator.urls')),    
-    path('api/token/', include('token_system.urls')),
-    path('api/billing/', include('billing.urls')),
-    path('api/inventory/', include('inventory.urls')),
-    
-
+    # URL for API endpoints
+    path('api/', include('api.urls')),
 
     
     
-    path('api/auth/', include('djoser.urls')),
-    path('api/auth/', include('djoser.urls.jwt')),
-    
-    
+    # views defined in Viewset file     
     path("", views.home),
     path("login/", views.login),
-    path("token/", views.token), 
-    path("id_generator/", views.id_generator), 
-    path("billing/", views.billing), 
-    path("erp/", views.erp), 
-    
-    path("menu/", views.menu), 
-    path("menu/create/", views.menu),
-    path("menu/update/", views.menu),
-    path("menu/delete/", views.menu),
-    path("menu/payment/", views.menu),
-    
-    path("order/", views.order), 
-    path("order/create/", views.order),
-    path("order/update/", views.order),
-    path("order/delete/", views.order),
-    path("order/payment/", views.order),
-        
-
-    path("employee/", views.employee), 
-    path("employee/create/", views.employee),
-    path("employee/update/", views.employee),
-    path("employee/delete/", views.employee),
-    path("employee/payment/", views.employee),
-    
-    
-    path("inventory/", views.inventory), 
-    path("inventory/create/", views.inventory),
-    path("inventory/update/", views.inventory),
-    path("inventory/delete/", views.inventory),
-    path("inventory/payment/", views.inventory),
-    
     path("register/", views.register),
     path("forget-password/", views.forget_password),
     path('logout/', views.LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name='logout'),
     path("send_email", views.email),
+    
+    
+    
+    # views defined in token_viewset file   
+    path("token/", token_viewset.token), 
+    
+     # views defined in id_generator_viewset file   
+    path("id_generator/", id_generator_viewset.id_generator), 
+    
+     # views defined in billing_viewset file   
+    path("billing/", billing_viewset.billing), 
+    
+    # views defined in erp_viewset file  
+    path("erp/", erp_viewset.erp), 
+    
+    
+    # views defined in menu_viewset file  
+    path("menu/", menu_viewset.menu), 
+    path("menu/create/", menu_viewset.menu),
+    path("menu/update/", menu_viewset.menu),
+    path("menu/delete/", menu_viewset.menu),
+    path("menu/payment/", menu_viewset.menu),
+    
+    
+    # views defined in order_viewset file  
+    path("order/", order_viewset.order), 
+    path("order/create/", order_viewset.order),
+    path("order/update/", order_viewset.order),
+    path("order/delete/", order_viewset.order),
+    path("order/payment/", order_viewset.order),
+        
+
+    # views defined in employee_viewset file  
+    path("employee/", employee_viewset.employee), 
+    path("employee/create/", employee_viewset.employee),
+    path("employee/update/", employee_viewset.employee),
+    path("employee/delete/", employee_viewset.employee),
+    path("employee/payment/", employee_viewset.employee),
+    
+    
+    # views defined in inventory_viewset file  
+    path("inventory/", inventory_viewset.inventory), 
+    path("inventory/create/", inventory_viewset.inventory),
+    path("inventory/update/", inventory_viewset.inventory),
+    path("inventory/delete/", inventory_viewset.inventory),
+    path("inventory/payment/", inventory_viewset.inventory),
+    
+
 
 ]
 

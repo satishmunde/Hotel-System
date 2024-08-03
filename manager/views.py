@@ -26,50 +26,10 @@ def home(request):
 
     return render(request, 'index.html' , {'user':user})
 
-@login_required
-def employee(request):
-    user = request.session['user'] 
-    
-    
-    return render(request, 'employee.html',{'user':user})
-
-@login_required
-def erp(request):
-    user = request.session['user'] 
-    
-    return render(request, 'erp.html',{'user':user})
 
 
-@login_required
-def menu(request):
-    user = request.session['user'] 
 
-    return render(request, 'menu.html',{'user':user})
 
-@login_required
-def billing(request):
-    user = request.session['user'] 
-    return render(request, 'billing.html' ,{'user':user})
-
-@login_required
-def id_generator(request):
-    user = request.session['user'] 
-    return render(request, 'id_generator.html' ,{'user':user})
-
-@login_required
-def order(request):
-    user = request.session['user'] 
-    return render(request, 'order.html' ,{'user':user})
-
-@login_required
-def inventory(request):
-    user = request.session['user'] 
-    return render(request, 'inventory.html' ,{'user':user})
-
-@login_required
-def token(request):
-    user = request.session['user'] 
-    return render(request, 'token.html' ,{'user':user})
 
 @csrf_exempt
 def login(request):
