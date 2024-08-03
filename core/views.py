@@ -9,6 +9,7 @@ from rest_framework import viewsets, status, permissions
 from .models import LoginSystem
 from .filters import LoginSystemFilter  # Import filter class if needed
 
+
 class LoginSystemViewSet(viewsets.ModelViewSet):
     queryset = LoginSystem.objects.all()
     serializer_class = LoginSystemSerializer
@@ -21,7 +22,6 @@ class LoginSystemViewSet(viewsets.ModelViewSet):
         print(queryset.query)  # Print the SQL query to check if filtering is applied
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
-
 
 
     def retrieve(self, request, pk=None):

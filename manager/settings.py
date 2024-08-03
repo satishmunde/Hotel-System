@@ -54,6 +54,7 @@ INSTALLED_APPS = [
      'debug_toolbar',
     "crm",
     'rest_framework', 
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -66,7 +67,12 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.cache.CacheMiddleware',
 ]
+
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 60 * 15
+CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -121,6 +127,41 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6380/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+
+
+# SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+# SESSION_CACHE_ALIAS = 'default'
+
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+
+SESSION_COOKIE_AGE = 1209600  # 2 weeks
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+
+
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'  # Use cache-based sessions
+SESSION_CACHE_ALIAS = 'default'  # Points to the cache backend configured above
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -229,11 +270,11 @@ REDOC_SETTINGS = {
 
 }
 
-# settings.py
+
 LOGIN_URL = '/login/?next=/'  # Adjust this URL according to your login page URL
 
 
-# settings.py
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  # Gmail's SMTP server

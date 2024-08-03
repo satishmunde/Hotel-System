@@ -13,20 +13,32 @@ from django.contrib.auth.views import LogoutView
 from django.utils.decorators import method_decorator
 from core.models import LoginSystem
 from core.serializers import LoginSystemSerializer
+from django.core.cache import cache
 from django.views.decorators.csrf import csrf_exempt
 
 import json
-
+from django.views.decorators.cache import cache_page
+@cache_page(60 * 15)
 @login_required
 def home(request):
     
     
-    user = request.session['user'] 
+    # user = request.session['user'] 
+    # # cache.set('user', user, timeout=60*5)
+    # print(user)
+
+    user = request.session.get('user', None)  # Use .get() to avoid KeyError
     print(user)
+    if user:
+        cache.set('user', user, timeout=60*5)
+        print('cache saved')
+    else:
+        user = cache.get('user')  # Retrieve from cache if session data is not available
+        
+        print('cache get')
+
 
     return render(request, 'index.html' , {'user':user})
-
-
 
 
 
@@ -102,6 +114,7 @@ class LogoutView(LogoutView):
         user.access_token = None
         user.refresh_token = None
         user.save()
+        request.session.flush()
         
         # Call the parent dispatch method
         return super().dispatch(request, *args, **kwargs)
