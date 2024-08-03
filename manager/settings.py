@@ -153,6 +153,8 @@ CHANNEL_LAYERS = {
     },
 }
 
+ASGI_APPLICATION = 'manager.asgi.application'
+
 SESSION_COOKIE_AGE = 1209600  # 2 weeks
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 

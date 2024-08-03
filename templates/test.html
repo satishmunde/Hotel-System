@@ -1,181 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Order Status</title>
-    <!-- Include jqGrid CSS from CDN -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/jquery-ui-dist/jquery-ui.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/jqgrid/css/ui.jqgrid.min.css"
-    />
-    <!-- Include jQuery from CDN -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Include jQuery UI from CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery-ui-dist/jquery-ui.min.js"></script>
-    <!-- Include jqGrid JS from CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/jqgrid/js/jquery.jqgrid.min.js"></script>
-    <!-- Include jsPDF from CDN for PDF generation -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.6.0/jspdf.umd.min.js"></script>
-    <!-- Include PapaParse from CDN for CSV export -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-  </head>
-  <body>
-    <div class="container">
-      <h4 class="card-title">Order Status</h4>
-      <button id="exportCSV" class="btn btn-primary">Export to CSV</button>
-      <button id="printPDF" class="btn btn-primary">Print to PDF</button>
-      <table id="jqGrid"></table>
-      <div id="jqGridPager"></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #messages {
+            border: 1px solid #ddd;
+            padding: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+        }
+        .message {
+            margin-bottom: 10px;
+        }
+        .message span {
+            display: block;
+            word-break: break-word;
+        }
+        .message.user-message {
+            color: #007bff;
+        }
+        .message.system-message {
+            color: #6c757d;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4">Chat Application</h1>
+        <div class="alert alert-info">
+            Status: <span id="status">Not connected</span>
+        </div>
+        <div id="messages" class="border p-2 mb-3">
+            <!-- Messages will appear here -->
+        </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="message-input" placeholder="Type a message">
+            <div class="input-group-append">
+                <button id="send-button" class="btn btn-primary">Send</button>
+            </div>
+        </div>
     </div>
 
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- WebSocket JS -->
     <script>
-      $(document).ready(function () {
-        // Initialize jqGrid
-        $("#jqGrid").jqGrid({
-          datatype: "local",
-          colModel: [
-            { name: "id", label: "ID", key: true, width: 50, sorttype: "int" },
-            {
-              name: "ClientName",
-              label: "Client Name",
-              width: 150,
-              formatter: "actions",
-              formatoptions: { keys: true },
-            },
-            { name: "OrderNo", label: "Order No", width: 100 },
-            { name: "ProductCost", label: "Product Cost", width: 100 },
-            { name: "Project", label: "Project", width: 150 },
-            { name: "PaymentMode", label: "Payment Mode", width: 150 },
-            { name: "StartDate", label: "Start Date", width: 120 },
-            {
-              name: "PaymentStatus",
-              label: "Payment Status",
-              width: 120,
-              formatter: function (cellValue) {
-                switch (cellValue) {
-                  case "Approved":
-                    return "<span class='badge badge-success'>Approved</span>";
-                  case "Pending":
-                    return "<span class='badge badge-warning'>Pending</span>";
-                  case "Rejected":
-                    return "<span class='badge badge-danger'>Rejected</span>";
+        document.addEventListener("DOMContentLoaded", function() {
+            const socket = new WebSocket(`ws://127.0.0.1:8001/ws/notifications/`);
+
+            socket.onopen = function(e) {
+                console.log('WebSocket connection established');
+                document.getElementById('status').innerText = 'Connected';
+                document.getElementById('status').classList.add('text-success');
+            };
+
+            socket.onmessage = function(e) {
+                const data = JSON.parse(e.data);
+                const messages = document.getElementById('messages');
+                const messageElement = document.createElement('div');
+                console.log(data)
+            
+                // Determine the type of message and apply the appropriate styling
+                if (data.type === 'text') {
+                    messageElement.className = 'message user-message';
+                    messageElement.innerHTML = `<span>${data.message}</span>`;
+                } else if (data.type === 'notification') {
+                    console.log(data)
+                    messageElement.className = 'message system-message';
+                    messageElement.innerHTML = `<span>${data.message}</span>`;
+                } else {
+                    messageElement.className = 'message system-message';
+                    messageElement.innerHTML = `<span>Unknown message type</span>`;
                 }
-              },
-            },
-          ],
-          data: [
-            {
-              id: 1,
-              ClientName: "Henry Klein",
-              OrderNo: "02312",
-              ProductCost: "$14,500",
-              Project: "Dashboard",
-              PaymentMode: "Credit card",
-              StartDate: "04 Dec 2019",
-              PaymentStatus: "Approved",
-            },
-            {
-              id: 2,
-              ClientName: "Estella Bryan",
-              OrderNo: "02312",
-              ProductCost: "$14,500",
-              Project: "Website",
-              PaymentMode: "Cash on delivered",
-              StartDate: "04 Dec 2019",
-              PaymentStatus: "Pending",
-            },
-            {
-              id: 3,
-              ClientName: "Lucy Abbott",
-              OrderNo: "02312",
-              ProductCost: "$14,500",
-              Project: "App design",
-              PaymentMode: "Credit card",
-              StartDate: "04 Dec 2019",
-              PaymentStatus: "Rejected",
-            },
-            {
-              id: 4,
-              ClientName: "Peter Gill",
-              OrderNo: "02312",
-              ProductCost: "$14,500",
-              Project: "Development",
-              PaymentMode: "Online Payment",
-              StartDate: "04 Dec 2019",
-              PaymentStatus: "Approved",
-            },
-            {
-              id: 5,
-              ClientName: "Sallie Reyes",
-              OrderNo: "02312",
-              ProductCost: "$14,500",
-              Project: "Website",
-              PaymentMode: "Credit card",
-              StartDate: "04 Dec 2019",
-              PaymentStatus: "Approved",
-            },
-          ],
-          pager: "#jqGridPager",
-          rowNum: 10,
-          viewrecords: true,
-          height: "auto",
-          caption: "Order Status",
+            
+                // Append the message to the chat window
+                messages.appendChild(messageElement);
+            
+                // Scroll to the bottom to show the latest message
+                messages.scrollTop = messages.scrollHeight;
+            };
+            
+
+            socket.onclose = function(e) {
+                console.log('WebSocket connection closed');
+                document.getElementById('status').innerText = 'Disconnected';
+                document.getElementById('status').classList.remove('text-success');
+                document.getElementById('status').classList.add('text-danger');
+            };
+
+            document.getElementById('send-button').addEventListener('click', function() {
+                const message = document.getElementById('message-input').value;
+                if (message.trim()) {
+                    socket.send(JSON.stringify({ 'type': 'text', 'message': message }));
+                    document.getElementById('message-input').value = ''; // Clear the input field
+                }
+            });
+
+            document.getElementById('message-input').addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    document.getElementById('send-button').click();
+                }
+            });
         });
-
-        // Export to CSV
-        $("#exportCSV").click(function () {
-          const data = $("#jqGrid").jqGrid("getGridParam", "data");
-          const csv = Papa.unparse(data);
-          const csvBlob = new Blob([csv], { type: "text/csv" });
-          const url = URL.createObjectURL(csvBlob);
-          const a = document.createElement("a");
-          a.href = url;
-          a.download = "data.csv";
-          a.click();
-        });
-
-        // Print to PDF
-        $("#printPDF").click(function () {
-          const { jsPDF } = window.jspdf;
-          const doc = new jsPDF();
-
-          const rows = [];
-          const data = $("#jqGrid").jqGrid("getGridParam", "data");
-          data.forEach((row) => {
-            rows.push([
-              row.ClientName,
-              row.OrderNo,
-              row.ProductCost,
-              row.Project,
-              row.PaymentMode,
-              row.StartDate,
-              row.PaymentStatus,
-            ]);
-          });
-
-          doc.autoTable({
-            head: [
-              [
-                "Client Name",
-                "Order No",
-                "Product Cost",
-                "Project",
-                "Payment Mode",
-                "Start Date",
-                "Payment Status",
-              ],
-            ],
-            body: rows,
-          });
-
-          doc.save("data.pdf");
-        });
-      });
     </script>
-  </body>
+</body>
 </html>
