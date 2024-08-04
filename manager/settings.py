@@ -67,7 +67,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.cache.CacheMiddleware',
+    # 'django.middleware.cache.CacheMiddleware',
 ]
 
 CACHE_MIDDLEWARE_ALIAS = 'default'
@@ -282,3 +282,6 @@ EMAIL_USE_SSL = False  # Do not use SSL (use TLS instead)
 EMAIL_HOST_USER = 'satishmh26@gmail.com'  # Your Gmail address
 EMAIL_HOST_PASSWORD = 'gdug zoaf enta zjia'  #    gdug zoaf enta zjia
 DEFAULT_FROM_EMAIL = 'satishmh26@gmail.com'  # Default "From" email address
+
+
+    
