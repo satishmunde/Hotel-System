@@ -1,0 +1,267 @@
+<!doctype html>
+
+<html
+  lang="en"
+  class="light-style layout-menu-fixed layout-compact"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="/static/assets/"
+  data-template="vertical-menu-template-free"
+  data-style="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+      <title>The Ultimate Manager</title>
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/static/assets/img/favicon/favicon.ico" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet" />
+
+    <link rel="stylesheet" href="/static/assets/vendor/fonts/boxicons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="/static/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/static/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="/static/assets/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="/static/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="/static/assets/vendor/libs/apex-charts/apex-charts.css" />
+
+    <script src="/static/assets/vendor/js/helpers.js"></script>
+
+    <script src="/static/assets/js/config.js"></script>
+
+
+
+
+
+  </head>
+
+  <body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        <!-- Menu -->
+
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+  
+
+          <div class="menu-inner-shadow"></div>
+
+          <ul class="menu-inner py-1">
+            <!-- Dashboards -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">User Profile</span></li>
+            <li class="nav-item profile">
+              <div class="container">
+                <div class="card profile-card">
+                  <div class="card-body text-center">
+                    <div
+                      class="profile-container d-flex flex-column align-items-center"
+                    >
+                      <div class="profile-pic mb-3">
+                        <div class="count-indicator position-relative">
+                          <img
+                            class="img-fluid rounded-circle"
+                            src="{{user.profile_pictures}}"
+                            alt="Profile Picture"
+                            style="width: 100px; height: 100px"
+                          />
+                        </div>
+                      </div>
+                      <div class="profile-name mb-3">
+                        <h5 class="mb-0 font-weight-normal">
+                          {{user.first_name}} {{user.last_name}}
+                        </h5>
+                      </div>
+                      {% if user.employee_position %}
+                      <div class="employee-positions mt-3">
+                        {% for position in user.employee_position %}
+                        <div class="position-details mb-2">
+                          <span class="d-block"
+                            >Dept :
+                            <strong>{{ position.department.name }}</strong></span
+                          >
+                          <span class="d-block"
+                            >Position :
+                            <strong>{{ position.position.name }}</strong></span
+                          >
+                        </div>
+                        {% endfor %}
+                      </div>
+                      {% else %}
+                      <p class="mt-3">No employee positions available.</p>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            
+  
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Navigation Manu</span></li>
+
+            <li class="menu-item  {% if request.path == '/' %}active{% endif %}">
+              <a href="/" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-dashboard"></i>
+                <div class="text-truncate" >Dashboard</div>
+              </a>
+            </li>
+
+            <li class="menu-item  {% if request.path == '/token/' %}active{% endif %}">
+              <a href="/token" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-coin"></i>
+                <div class="text-truncate" >Token</div>
+              </a>
+            </li>
+            <li class="menu-item {% if request.path == '/order/' %}active{% endif %}">
+              <a href="/order" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-dish"></i>
+                <div class="text-truncate" >Order's</div>
+              </a>
+            </li>
+            <li class="menu-item {% if request.path == '/menu/' %}active{% endif %}">
+              <a href="/menu" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-food-menu"></i>
+                <div class="text-truncate" >Menu's</div>
+              </a>
+            </li>
+            <li class="menu-item {% if request.path == 'inventory/' %}active{% endif %}">
+              <a href="/inventory" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-building-house"></i>
+                <div class="text-truncate" >Inventory</div>
+              </a>
+            </li>
+            <li class="menu-item {% if request.path == '/billing/' %}active{% endif %}">
+              <a href="/billing" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-wallet"></i>
+                <div class="text-truncate" >Billing</div>
+              </a>
+            </li>
+            <li class="menu-item {% if request.path == '/erp/' %}active{% endif %}">
+              <a href="/erp" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-bank"></i>
+                <div class="text-truncate" >ERP</div>
+              </a>
+            </li>
+            <li class="menu-item {% if request.path == '/employee/' %}active{% endif %}">
+              <a href="/employee" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-user"></i>
+                <div class="text-truncate" >Employee's</div>
+              </a>
+            </li>
+            <li class="menu-item {% if request.path == '/id_generator/' %}active{% endif %}">
+              <a href="/id_generator" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-id-card"></i>
+                <div class="text-truncate" >ID CARD's</div>
+              </a>
+            </li>
+
+
+        
+          </ul>
+        </aside>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          <!-- Navbar -->
+
+          <nav
+            class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+            id="layout-navbar">
+       
+
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <!-- Search -->
+ 
+              <!-- /Search -->
+
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a
+                    class="nav-link dropdown-toggle hide-arrow p-0"
+                    href="javascript:void(0);"
+                    data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <img src="/static/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <img src="{{user.profile_pictures}}" alt class="w-px-40 h-auto rounded-circle" />
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <h6 class="mb-0"> 
+                              {{user.first_name}} {{user.last_name}}
+                            </h6>
+                            <small class="text-muted">Admin</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider my-1"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <i class="bx bx-user bx-md me-3"></i><span>My Profile</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#"> <i class="bx bx-cog bx-md me-3"></i><span>Settings</span> </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <span class="d-flex align-items-center align-middle">
+                          <i class="flex-shrink-0 bx bx-credit-card bx-md me-3"></i
+                          ><span class="flex-grow-1 align-middle">Billing Plan</span>
+                          <span class="flex-shrink-0 badge rounded-pill bg-danger">4</span>
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider my-1"></div>
+                    </li>
+                    <li>
+                      <form
+                      id="logout-form"
+                      action="{% url 'logout' %}"
+                      method="POST"
+                      style="display: none"
+                    >
+                      {% csrf_token %}
+                    </form>
+  
+                    <a
+                      class="dropdown-item preview-item"
+                      href="#"
+                      onclick="handleLogout();"
+                    >
+                        <i class="bx bx-power-off bx-md me-3"></i><span>Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!--/ User -->
+              </ul>
+            </div>
+          </nav>
+
+          <!-- / Navbar -->

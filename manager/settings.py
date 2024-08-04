@@ -67,12 +67,12 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.cache.CacheMiddleware',
+    # 'django.middleware.cache.CacheMiddleware',
 ]
 
-CACHE_MIDDLEWARE_ALIAS = 'default'
-CACHE_MIDDLEWARE_SECONDS = 60 * 15
-CACHE_MIDDLEWARE_KEY_PREFIX = ''
+# CACHE_MIDDLEWARE_ALIAS = 'default'
+# CACHE_MIDDLEWARE_SECONDS = 60 * 15
+# CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -129,15 +129,15 @@ DATABASES = {
 }
 
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6380/1',
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-        }
-    }
-}
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django_redis.cache.RedisCache',
+#         'LOCATION': 'redis://127.0.0.1:6380/1',
+#         'OPTIONS': {
+#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+#         }
+#     }
+# }
 
 
 # SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
@@ -155,14 +155,14 @@ CHANNEL_LAYERS = {
 
 ASGI_APPLICATION = 'manager.asgi.application'
 
-SESSION_COOKIE_AGE = 1209600  # 2 weeks
+# SESSION_COOKIE_AGE = 1209600  # 2 weeks
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 
 
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'  # Use cache-based sessions
-SESSION_CACHE_ALIAS = 'default'  # Points to the cache backend configured above
+# SESSION_ENGINE = 'django.contrib.sessions.backends.cache'  # Use cache-based sessions
+# SESSION_CACHE_ALIAS = 'default'  # Points to the cache backend configured above
 
 
 # Password validation
@@ -196,13 +196,9 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
 STATIC_URL = "static/"
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
