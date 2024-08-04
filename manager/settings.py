@@ -67,12 +67,12 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     'corsheaders.middleware.CorsMiddleware',
-    # 'django.middleware.cache.CacheMiddleware',
+    'django.middleware.cache.CacheMiddleware',
 ]
 
-# CACHE_MIDDLEWARE_ALIAS = 'default'
-# CACHE_MIDDLEWARE_SECONDS = 60 * 15
-# CACHE_MIDDLEWARE_KEY_PREFIX = ''
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 60 * 15
+CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -129,19 +129,19 @@ DATABASES = {
 }
 
 
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django_redis.cache.RedisCache',
-#         'LOCATION': 'redis://127.0.0.1:6380/1',
-#         'OPTIONS': {
-#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-#         }
-#     }
-# }
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6380/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
 
 
-# SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-# SESSION_CACHE_ALIAS = 'default'
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'default'
 
 
 CHANNEL_LAYERS = {
@@ -161,8 +161,8 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 
 
-# SESSION_ENGINE = 'django.contrib.sessions.backends.cache'  # Use cache-based sessions
-# SESSION_CACHE_ALIAS = 'default'  # Points to the cache backend configured above
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'  # Use cache-based sessions
+SESSION_CACHE_ALIAS = 'default'  # Points to the cache backend configured above
 
 
 # Password validation
