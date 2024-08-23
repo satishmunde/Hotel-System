@@ -1,357 +1,416 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="content-wrapper p-4">
+<div class="content-wrapper p-4" data-aos="fade-up"
+data-aos-delay="700">
+  
 
      
       <!-- Bordered Tabs Justified -->
       <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
         <li class="nav-item flex-fill" role="presentation">
-          <button class="nav-link w-100 active" id="dashboard-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="true">Dashboard</button>
+          <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-home" type="button" role="tab" aria-controls="home" aria-selected="true">Menu Dashboard</button>
         </li>
         <li class="nav-item flex-fill" role="presentation">
-          <button class="nav-link w-100" id="menu-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-menu" type="button" role="tab" aria-controls="menu" aria-selected="false">Edit Menu</button>
+          <button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
         </li>
         <li class="nav-item flex-fill" role="presentation">
           <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
         </li>
       </ul>
-      <div class="tab-content " id="borderedTabJustifiedContent">
-        <div class="tab-pane fade show active" id="bordered-justified-dashboard" role="tabpanel" aria-labelledby="dashboard-tab"  >
-          <div class="row">
-            <div class="col-12 col-xxl-8  mb-6">
-              <div class="card">
-                <div class="row row-bordered g-0">
-                  <div class="col-lg-8">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                      <div class="card-title mb-0">
-                        <h5 class="m-0 me-2">Total Revenue</h5>
-                      </div>
-                      <div class="dropdown">
-                        <button
-                          class="btn p-0"
-                          type="button"
-                          id="totalRevenue"
-                          data-bs-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false">
-                          <i class="bx bx-dots-vertical-rounded bx-lg text-muted"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="totalRevenue">
-                          <a class="dropdown-item" href="javascript:void(0);">Select All</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Share</a>
-                        </div>
-                      </div>
-                    </div>
-                    <div id="totalRevenueChart" class="px-3"></div>
-                  </div>
-                  <div class="col-lg-4 d-flex align-items-center">
-                    <div class="card-body px-xl-9">
-                      <div class="text-center mb-6">
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-outline-primary">
-                            <script>
-                              document.write(new Date().getFullYear() - 1);
-                            </script>
-                          </button>
-                          <button
-                            type="button"
-                            class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            <span class="visually-hidden">Toggle Dropdown</span>
-                          </button>
-                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="javascript:void(0);">2021</a></li>
-                            <li><a class="dropdown-item" href="javascript:void(0);">2020</a></li>
-                            <li><a class="dropdown-item" href="javascript:void(0);">2019</a></li>
-                          </ul>
-                        </div>
-                      </div>
-
-                      <div id="growthChart"></div>
-                      <div class="text-center fw-medium my-6">62% Company Growth</div>
-
-                      <div class="d-flex gap-3 justify-content-between">
-                        <div class="d-flex">
-                          <div class="avatar me-2">
-                            <span class="avatar-initial rounded-2 bg-label-primary"
-                              ><i class="bx bx-dollar bx-lg text-primary"></i
-                            ></span>
-                          </div>
-                          <div class="d-flex flex-column">
-                            <small>
-                              <script>
-                                document.write(new Date().getFullYear() - 1);
-                              </script>
-                            </small>
-                            <h6 class="mb-0">$32.5k</h6>
-                          </div>
-                        </div>
-                        <div class="d-flex">
-                          <div class="avatar me-2">
-                            <span class="avatar-initial rounded-2 bg-label-info"
-                              ><i class="bx bx-wallet bx-lg text-info"></i
-                            ></span>
-                          </div>
-                          <div class="d-flex flex-column">
-                            <small>
-                              <script>
-                                document.write(new Date().getFullYear() - 2);
-                              </script>
-                            </small>
-                            <h6 class="mb-0">$41.2k</h6>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!--/ Total Revenue -->
-            <div class="col-12 col-md-8 col-lg-12 col-xxl-4 ">
-              <div class="row">
-                <div class="col-6 mb-6">
-                  <div class="card h-100">
-                    <div class="card-body">
-                      <div class="card-title d-flex align-items-start justify-content-between mb-4">
-                        <div class="avatar flex-shrink-0">
-                          <img src="/static/assets/img/icons/unicons/paypal.png" alt="paypal" class="rounded" />
-                        </div>
-                        <div class="dropdown">
-                          <button
-                            class="btn p-0"
-                            type="button"
-                            id="cardOpt4"
-                            data-bs-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false">
-                            <i class="bx bx-dots-vertical-rounded text-muted"></i>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt4">
-                            <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                            <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                          </div>
-                        </div>
-                      </div>
-                      <p class="mb-1">Payments</p>
-                      <h4 class="card-title mb-3">$2,456</h4>
-                      <small class="text-danger fw-medium"><i class="bx bx-down-arrow-alt"></i> -14.82%</small>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-6 mb-6">
-                  <div class="card h-100">
-                    <div class="card-body">
-                      <div class="card-title d-flex align-items-start justify-content-between mb-4">
-                        <div class="avatar flex-shrink-0">
-                          <img src="/static/assets/img/icons/unicons/cc-primary.png" alt="Credit Card" class="rounded" />
-                        </div>
-                        <div class="dropdown">
-                          <button
-                            class="btn p-0"
-                            type="button"
-                            id="cardOpt1"
-                            data-bs-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false">
-                            <i class="bx bx-dots-vertical-rounded text-muted"></i>
-                          </button>
-                          <div class="dropdown-menu" aria-labelledby="cardOpt1">
-                            <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                            <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                          </div>
-                        </div>
-                      </div>
-                      <p class="mb-1">Transactions</p>
-                      <h4 class="card-title mb-3">$14,857</h4>
-                      <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.14%</small>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 mb-6">
-                  <div class="card">
-                    <div class="card-body">
-                      <div class="d-flex justify-content-between align-items-center flex-sm-row flex-column gap-10">
-                        <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
-                          <div class="card-title mb-6">
-                            <h5 class="text-nowrap mb-1">menu Report</h5>
-                            <span class="badge bg-label-warning">YEAR 2022</span>
-                          </div>
-                          <div class="mt-sm-auto">
-                            <span class="text-success text-nowrap fw-medium"
-                              ><i class="bx bx-up-arrow-alt"></i> 68.2%</span
-                            >
-                            <h4 class="mb-0">$84,686k</h4>
-                          </div>
-                        </div>
-                        <div id="menuReportChart"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+      <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+        <div class="tab-pane fade show active" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab" >
          
 
-            {% comment %} <div class="col-lg-12 col-md-12  " >
-              <div class="row">
-                <div class="col-lg-6 col-md-12 col-6 mb-6">
-                  <div class="card">
-                    <div class="card-body">
-                      <h4 class="card-title">Menu Categeries</h4>
-                      <div class="table-responsive">
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th>
-                                <div class="form-check form-check-muted m-0">
-                                  <label class="form-check-label"><input type="checkbox" class="form-check-input" /></label>
+            <div class="row">
+              <div class="col-md-12 col-lg-12">
+                <div class="row row-cols-1">
+                    <div class="overflow-hidden d-slider1">
+                        <ul class="p-0 m-0 mb-2 swiper-wrapper list-inline">
+                            <!-- First Food Item -->
+                            <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="1000">
+                              <div class="card-body">
+                                  <img src="http://127.0.0.1:8000/media/profile_pictures/Photo.jpg" class="img-fluid" alt="Beef Wellington">
+                                  <div class="progress-detail mt-3">
+                                      <p class="mb-2">Beef Wellington</p>
+                                      <p class="text-muted">Tender beef fillet wrapped in puff pastry, served with a rich mushroom duxelles.</p>
+                                  </div>
+                              </div>
+                          </li>
+                            <!-- Second Food Item -->
+                            <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="800">
+                                <div class="card-body">
+                                    <img src="http://127.0.0.1:8000/media/profile_pictures/Photo.jpg" class="img-fluid" alt="Margherita Pizza">
+                                    <div class="progress-detail mt-3">
+                                        <p class="mb-2">Margherita Pizza</p>
+                                        <p class="text-muted">Traditional pizza topped with tomatoes, mozzarella, and fresh basil.</p>
+                                    </div>
                                 </div>
-                              </th>
-                              <th>Client Name</th>
-                              <th>Order No</th>
-                              
-                              <th>Start Date</th>
-                              <th>Payment Status</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>
-                                <div class="form-check form-check-muted m-0">
-                                  <label class="form-check-label"><input type="checkbox" class="form-check-input" /></label>
+                            </li>
+                            <!-- Third Food Item -->
+                            <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="900">
+                                <div class="card-body">
+                                    <img src="http://127.0.0.1:8000/media/profile_pictures/Photo.jpg" class="img-fluid" alt="Caesar Salad">
+                                    <div class="progress-detail mt-3">
+                                        <p class="mb-2">Caesar Salad</p>
+                                        <p class="text-muted">Crisp romaine lettuce with Caesar dressing, croutons, and Parmesan cheese.</p>
+                                    </div>
                                 </div>
-                              </td>
-                              <td>
-                                <img src="/static/assets/images/faces/face1.jpg" alt="image" />
-                                <span class="pl-2">Henry Klein</span>
-                              </td>
-                              <td>02312</td>
-                             
-                              <td>04 Dec 2019</td>
-                              <td>
-                                <div class="badge badge-outline-success">Approved</div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div class="form-check form-check-muted m-0">
-                                  <label class="form-check-label"><input type="checkbox" class="form-check-input" /></label>
+                            </li>
+                            <!-- Fourth Food Item -->
+                            <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="1000">
+                                <div class="card-body">
+                                    <img src="http://127.0.0.1:8000/media/profile_pictures/Photo.jpg" class="img-fluid" alt="Beef Wellington">
+                                    <div class="progress-detail mt-3">
+                                        <p class="mb-2">Beef Wellington</p>
+                                        <p class="text-muted">Tender beef fillet wrapped in puff pastry, served with a rich mushroom duxelles.</p>
+                                    </div>
                                 </div>
-                              </td>
-                              <td>
-                                <img src="/static/assets/images/faces/face2.jpg" alt="image" />
-                                <span class="pl-2">Estella Bryan</span>
-                              </td>
-                              <td>02312</td>
-                             
-                              <td>04 Dec 2019</td>
-                              <td>
-                                <div class="badge badge-outline-warning">Pending</div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div class="form-check form-check-muted m-0">
-                                  <label class="form-check-label"><input type="checkbox" class="form-check-input" /></label>
+                            </li>
+                            <!-- Fifth Food Item -->
+                            <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="1100">
+                                <div class="card-body">
+                                    <img src="http://127.0.0.1:8000/media/profile_pictures/Photo.jpg" class="img-fluid" alt="Lobster Bisque">
+                                    <div class="progress-detail mt-3">
+                                        <p class="mb-2">Lobster Bisque</p>
+                                        <p class="text-muted">Creamy and rich soup made with fresh lobster, butter, and brandy.</p>
+                                    </div>
                                 </div>
-                              </td>
-                              <td>
-                                <img src="/static/assets/images/faces/face5.jpg" alt="image" />
-                                <span class="pl-2">Lucy Abbott</span>
-                              </td>
-                              <td>02312</td>
-                             
-                              <td>04 Dec 2019</td>
-                              <td>
-                                <div class="badge badge-outline-danger">Rejected</div>
-                              </td>
-                            </tr>
-                            
-                          </tbody>
-                        </table>
-                      </div>
+                            </li>
+                            <!-- Sixth Food Item -->
+                            <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="1200">
+                                <div class="card-body">
+                                    <img src="http://127.0.0.1:8000/media/profile_pictures/Photo.jpg" class="img-fluid" alt="Ratatouille">
+                                    <div class="progress-detail mt-3">
+                                        <p class="mb-2">Ratatouille</p>
+                                        <p class="text-muted">Provencal vegetable dish made with tomatoes, zucchini, eggplant, and peppers.</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Seventh Food Item -->
+                            <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="1300">
+                                <div class="card-body">
+                                    <img src="http://127.0.0.1:8000/media/profile_pictures/Photo.jpg" class="img-fluid" alt="Chicken Parmesan">
+                                    <div class="progress-detail mt-3">
+                                        <p class="mb-2">Chicken Parmesan</p>
+                                        <p class="text-muted">Breaded chicken breast topped with marinara sauce and melted mozzarella cheese.</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Eighth Food Item -->
+                            <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="1400">
+                                <div class="card-body">
+                                    <img src="http://127.0.0.1:8000/media/profile_pictures/Photo.jpg" class="img-fluid" alt="Peking Duck">
+                                    <div class="progress-detail mt-3">
+                                        <p class="mb-2">Peking Duck</p>
+                                        <p class="text-muted">Crispy-skinned duck served with hoisin sauce, scallions, and thin pancakes.</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Ninth Food Item -->
+                            <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="1500">
+                                <div class="card-body">
+                                    <img src="http://127.0.0.1:8000/media/profile_pictures/Photo.jpg" class="img-fluid" alt="Paella">
+                                    <div class="progress-detail mt-3">
+                                        <p class="mb-2">Paella</p>
+                                        <p class="text-muted">Spanish rice dish with seafood, chicken, and saffron-infused broth.</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Tenth Food Item -->
+                            <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="1600">
+                                <div class="card-body">
+                                    <img src="http://127.0.0.1:8000/media/profile_pictures/Photo.jpg" class="img-fluid" alt="Tiramisu">
+                                    <div class="progress-detail mt-3">
+                                        <p class="mb-2">Tiramisu</p>
+                                        <p class="text-muted">Layered Italian dessert made with coffee-soaked ladyfingers, mascarpone cheese, and cocoa powder.</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Eleventh Food Item -->
+                            <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="1700">
+                                <div class="card-body">
+                                    <img src="http://127.0.0.1:8000/media/profile_pictures/Photo.jpg" class="img-fluid" alt="Sushi Platter">
+                                    <div class="progress-detail mt-3">
+                                        <p class="mb-2">Sushi Platter</p>
+                                        <p class="text-muted">Assorted sushi with fresh fish, rice, seaweed, and wasabi.</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Twelfth Food Item -->
+                            <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="1800">
+                                <div class="card-body">
+                                    <img src="http://127.0.0.1:8000/media/profile_pictures/Photo.jpg" class="img-fluid" alt="Chocolate Fondant">
+                                    <div class="progress-detail mt-3">
+                                        <p class="mb-2">Chocolate Fondant</p>
+                                        <p class="text-muted">Warm chocolate cake with a gooey center, served with vanilla ice cream.</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Thirteenth Food Item -->
+                            <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="1900">
+                                <div class="card-body">
+                                    <img src="http://127.0.0.1:8000/media/profile_pictures/Photo.jpg" class="img-fluid" alt="Beef Bourguignon">
+                                    <div class="progress-detail mt-3">
+                                        <p class="mb-2">Beef Bourguignon</p>
+                                        <p class="text-muted">French beef stew braised in red wine with mushrooms, onions, and bacon.</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Fourteenth Food Item -->
+                            <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="2000">
+                                <div class="card-body">
+                                    <img src="http://127.0.0.1:8000/media/profile_pictures/Photo.jpg" class="img-fluid" alt="Lamb Rogan Josh">
+                                    <div class="progress-detail mt-3">
+                                        <p class="mb-2">Lamb Rogan Josh</p>
+                                        <p class="text-muted">Kashmiri-style lamb curry with a rich, spiced tomato-based sauce.</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Fifteenth Food Item -->
+                            <li class="swiper-slide card card-slide" data-aos="fade-up" data-aos-delay="2100">
+                                <div class="card-body">
+                                    <img src="http://127.0.0.1:8000/media/profile_pictures/Photo.jpg" class="img-fluid" alt="Creme Brulee">
+                                    <div class="progress-detail mt-3">
+                                        <p class="mb-2">Creme Brulee</p>
+                                        <p class="text-muted">Creamy custard dessert topped with a layer of caramelized sugar.</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-                  </div>
                 </div>
-                <div class="col-lg-6 col-md-12 col-6 mb-6">
-                  <div class="card">
-                    <div class="card-body">
-                      <h4 class="card-title">Menu Items</h4>
+            </div>
+            
+
+            <div class="col-12 grid-margin">
+              <div class="card" data-aos="fade-up" data-aos-delay="700">
+                  <div class="card-body">
+                      <h4 class="card-title">Order Status</h4>
                       <div class="table-responsive">
-                        <table class="table">
+                        <table id="orderTable" class="table display nowrap table-hover" style="width:100%">
                           <thead>
-                            <tr>
-                              <th>
-                                <div class="form-check form-check-muted m-0">
-                                  <label class="form-check-label"><input type="checkbox" class="form-check-input" /></label>
-                                </div>
-                              </th>
-       
-                              <th>Product Cost</th>
-                              <th>Project</th>
-                              <th>Payment Mode</th>
-                              <th>Start Date</th>
-                             
-                            </tr>
+                              <tr>
+                                  <th>
+                                      <div class="form-check form-check-muted m-0">
+                                          <label class="form-check-label">
+                                              <input type="checkbox" class="form-check-input" id="selectAll" />
+                                          </label>
+                                      </div>
+                                  </th>
+                                  <th>Client Name</th>
+                                  <th>Order No</th>
+                                  <th>Product Cost</th>
+                                  <th>Project</th>
+                                  <th>Payment Mode</th>
+                                  <th>Start Date</th>
+                                  <th>Payment Status</th>
+                              </tr>
+                              <tr>
+                                  <th></th>
+                                  <th><input type="text" placeholder="Search Client Name" /></th>
+                                  <th><input type="text" placeholder="Search Order No" /></th>
+                                  <th><input type="text" placeholder="Search Product Cost" /></th>
+                                  <th><input type="text" placeholder="Search Project" /></th>
+                                  <th>
+                                    <select>
+                                        <option value="">All</option>
+                                        <option value="Credit Card">Credit Card</option>
+                                        <option value="Debit Card">Debit Card</option>
+                                        <option value="PayPal">PayPal</option>
+                                        <option value="Bank Transfer">Bank Transfer</option>
+                                    </select>
+                                </th>
+                                <th><input type="text" placeholder="Search Start Date" /></th>
+                                  <th>
+                                    <select>
+                                        <option value="">All</option>
+                                        <option value="Approved">Approved</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Declined">Declined</option>
+                                    </select>
+                                </th>
+                              </tr>
                           </thead>
-                          <tbody>
-                            <tr>
-                              <td>
-                                <div class="form-check form-check-muted m-0">
-                                  <label class="form-check-label"><input type="checkbox" class="form-check-input" /></label>
-                                </div>
-                              </td>
-                             
-                            
-                              <td>$14,500</td>
-                              <td>Dashboard</td>
-                              <td>Credit card</td>
-                              <td>04 Dec 2019</td>
-                             
-                            </tr>
-                            <tr>
-                              <td>
-                                <div class="form-check form-check-muted m-0">
-                                  <label class="form-check-label"><input type="checkbox" class="form-check-input" /></label>
-                                </div>
-                              </td>
-                              
-                             
-                              <td>$14,500</td>
-                              <td>Website</td>
-                              <td>Cash on delivered</td>
-                              <td>04 Dec 2019</td>
-                            
-                            </tr>
-                            <tr>
-                              <td>
-                                <div class="form-check form-check-muted m-0">
-                                  <label class="form-check-label"><input type="checkbox" class="form-check-input" /></label>
-                                </div>
-                              </td>
-                              
-                             
-                              <td>$14,500</td>
-                              <td>App design</td>
-                              <td>Credit card</td>
-                              <td>04 Dec 2019</td>
-                              
-                            </tr>
-                     
+                          <tbody id="orderTableBody" class="table-group-divider">
+                              <!-- Rows will be dynamically inserted here -->
                           </tbody>
-                        </table>
+                      </table>
+                      
+                      </div>
+                  </div>
+              </div>
+          </div>
+          
+
+        </div>
+        <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
+          {% comment %} <div class="row"> {% endcomment %}
+            <div class="row col-12 grid-margin">
+              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">$12.34</h3>
+                          <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="icon icon-box-success">
+                          <span class="mdi mdi-arrow-top-right icon-item"></span>
+                        </div>
                       </div>
                     </div>
+                    <h6 class="text-muted font-weight-normal">Potential growth</h6>
                   </div>
                 </div>
               </div>
-            </div> {% endcomment %}
-
-            <div class="col-12 ">
+              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">$17.34</h3>
+                          <p class="text-success ml-2 mb-0 font-weight-medium">+11%</p>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="icon icon-box-success">
+                          <span class="mdi mdi-arrow-top-right icon-item"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <h6 class="text-muted font-weight-normal">Revenue current</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">$12.34</h3>
+                          <p class="text-danger ml-2 mb-0 font-weight-medium">-2.4%</p>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="icon icon-box-danger">
+                          <span class="mdi mdi-arrow-bottom-left icon-item"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <h6 class="text-muted font-weight-normal">Daily Income</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">$31.53</h3>
+                          <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="icon icon-box-success">
+                          <span class="mdi mdi-arrow-top-right icon-item"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <h6 class="text-muted font-weight-normal">Expense current</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row col-12 grid-margin">
+              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">$12.34</h3>
+                          <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="icon icon-box-success">
+                          <span class="mdi mdi-arrow-top-right icon-item"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <h6 class="text-muted font-weight-normal">Potential growth</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">$17.34</h3>
+                          <p class="text-success ml-2 mb-0 font-weight-medium">+11%</p>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="icon icon-box-success">
+                          <span class="mdi mdi-arrow-top-right icon-item"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <h6 class="text-muted font-weight-normal">Revenue current</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">$12.34</h3>
+                          <p class="text-danger ml-2 mb-0 font-weight-medium">-2.4%</p>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="icon icon-box-danger">
+                          <span class="mdi mdi-arrow-bottom-left icon-item"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <h6 class="text-muted font-weight-normal">Daily Income</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">$31.53</h3>
+                          <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="icon icon-box-success">
+                          <span class="mdi mdi-arrow-top-right icon-item"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <h6 class="text-muted font-weight-normal">Expense current</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Order Status</h4>
@@ -376,12 +435,14 @@
                       <tbody>
                         <tr>
                           <td>
-                            <div class="form-check form-check-muted m-0">
-                              <label class="form-check-label"><input type="checkbox" class="form-check-input" /></label>
-                            </div>
-                          </td>
+                                <div class="form-check form-check-muted m-0">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" />
+                                    </label>
+                                </div>
+                            </td>
                           <td>
-                            <img src="/static/assets/images/faces/face1.jpg" alt="image" />
+                            <img src="/static/ui-assets/images/faces/face1.jpg" alt="image" />
                             <span class="pl-2">Henry Klein</span>
                           </td>
                           <td>02312</td>
@@ -395,12 +456,14 @@
                         </tr>
                         <tr>
                           <td>
-                            <div class="form-check form-check-muted m-0">
-                              <label class="form-check-label"><input type="checkbox" class="form-check-input" /></label>
-                            </div>
-                          </td>
+                                <div class="form-check form-check-muted m-0">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" />
+                                    </label>
+                                </div>
+                            </td>
                           <td>
-                            <img src="/static/assets/images/faces/face2.jpg" alt="image" />
+                            <img src="/static/ui-assets/images/faces/face2.jpg" alt="image" />
                             <span class="pl-2">Estella Bryan</span>
                           </td>
                           <td>02312</td>
@@ -414,12 +477,14 @@
                         </tr>
                         <tr>
                           <td>
-                            <div class="form-check form-check-muted m-0">
-                              <label class="form-check-label"><input type="checkbox" class="form-check-input" /></label>
-                            </div>
-                          </td>
+                                <div class="form-check form-check-muted m-0">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" />
+                                    </label>
+                                </div>
+                            </td>
                           <td>
-                            <img src="/static/assets/images/faces/face5.jpg" alt="image" />
+                            <img src="/static/ui-assets/images/faces/face5.jpg" alt="image" />
                             <span class="pl-2">Lucy Abbott</span>
                           </td>
                           <td>02312</td>
@@ -433,12 +498,14 @@
                         </tr>
                         <tr>
                           <td>
-                            <div class="form-check form-check-muted m-0">
-                              <label class="form-check-label"><input type="checkbox" class="form-check-input" /></label>
-                            </div>
-                          </td>
+                                <div class="form-check form-check-muted m-0">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" />
+                                    </label>
+                                </div>
+                            </td>
                           <td>
-                            <img src="/static/assets/images/faces/face3.jpg" alt="image" />
+                            <img src="/static/ui-assets/images/faces/face3.jpg" alt="image" />
                             <span class="pl-2">Peter Gill</span>
                           </td>
                           <td>02312</td>
@@ -452,12 +519,14 @@
                         </tr>
                         <tr>
                           <td>
-                            <div class="form-check form-check-muted m-0">
-                              <label class="form-check-label"><input type="checkbox" class="form-check-input" /></label>
-                            </div>
-                          </td>
+                                <div class="form-check form-check-muted m-0">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" />
+                                    </label>
+                                </div>
+                            </td>
                           <td>
-                            <img src="/static/assets/images/faces/face4.jpg" alt="image" />
+                            <img src="/static/ui-assets/images/faces/face4.jpg" alt="image" />
                             <span class="pl-2">Sallie Reyes</span>
                           </td>
                           <td>02312</td>
@@ -475,172 +544,175 @@
                 </div>
               </div>
             </div>
-
-          </div>
-        </div>
-        <div class="tab-pane fade" id="bordered-justified-menu" role="tabpanel" aria-labelledby="menu-tab">
-          <div class="row ">
-
-       
-
-            <div class="col-12 p-2">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Order Status</h4>
-                  <div class="table-responsive">
-                    <button id="exportCSV" class="btn btn-primary">Export to CSV</button>
-                    <button id="printPDF" class="btn btn-primary">Print to PDF</button>
-                    <table id="jqGrid"></table>
-                    <div id="jqGridPager"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
+          {% comment %} </div> {% endcomment %}
         </div>
         <div class="tab-pane fade" id="bordered-justified-contact" role="tabpanel" aria-labelledby="contact-tab">
-          <div class="row">
-
-            <div class="col-lg-4 col-md-4 " >
-              <div class="row">
-                <div class="col-lg-6 col-md-12 col-6 mb-6">
-                  <div class="card h-100">
-                    <div class="card-body">
-                      <div class="card-title d-flex align-items-start justify-content-between mb-4">
-                        <div class="avatar flex-shrink-0">
-                          <img
-                            src="/static/assets/img/icons/unicons/chart-success.png"
-                            alt="chart success"
-                            class="rounded" />
-                        </div>
-                        <div class="dropdown">
-                          <button
-                            class="btn p-0"
-                            type="button"
-                            id="cardOpt3"
-                            data-bs-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false">
-                            <i class="bx bx-dots-vertical-rounded text-muted"></i>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                            <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                            <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                          </div>
+          {% comment %} <div class="row"> {% endcomment %}
+            <div class="row col-12 grid-margin">
+              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">$12.34</h3>
+                          <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
                         </div>
                       </div>
-                      <p class="mb-1">Profit</p>
-                      <h4 class="card-title mb-3">$12,628</h4>
-                      <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
+                      <div class="col-3">
+                        <div class="icon icon-box-success">
+                          <span class="mdi mdi-arrow-top-right icon-item"></span>
+                        </div>
+                      </div>
                     </div>
+                    <h6 class="text-muted font-weight-normal">Potential growth</h6>
                   </div>
                 </div>
-                <div class="col-lg-6 col-md-12 col-6 mb-6">
-                  <div class="card h-100">
-                    <div class="card-body">
-                      <div class="card-title d-flex align-items-start justify-content-between mb-4">
-                        <div class="avatar flex-shrink-0">
-                          <img
-                            src="/static/assets/img/icons/unicons/wallet-info.png"
-                            alt="wallet info"
-                            class="rounded" />
-                        </div>
-                        <div class="dropdown">
-                          <button
-                            class="btn p-0"
-                            type="button"
-                            id="cardOpt6"
-                            data-bs-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false">
-                            <i class="bx bx-dots-vertical-rounded text-muted"></i>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt6">
-                            <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                            <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                          </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">$17.34</h3>
+                          <p class="text-success ml-2 mb-0 font-weight-medium">+11%</p>
                         </div>
                       </div>
-                      <p class="mb-1">Sales</p>
-                      <h4 class="card-title mb-3">$4,679</h4>
-                      <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small>
+                      <div class="col-3">
+                        <div class="icon icon-box-success">
+                          <span class="mdi mdi-arrow-top-right icon-item"></span>
+                        </div>
+                      </div>
                     </div>
+                    <h6 class="text-muted font-weight-normal">Revenue current</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">$12.34</h3>
+                          <p class="text-danger ml-2 mb-0 font-weight-medium">-2.4%</p>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="icon icon-box-danger">
+                          <span class="mdi mdi-arrow-bottom-left icon-item"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <h6 class="text-muted font-weight-normal">Daily Income</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">$31.53</h3>
+                          <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="icon icon-box-success">
+                          <span class="mdi mdi-arrow-top-right icon-item"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <h6 class="text-muted font-weight-normal">Expense current</h6>
                   </div>
                 </div>
               </div>
             </div>
-
-            <div class="col-lg-4 col-md-4 " >
-              <div class="row">
-                <div class="col-lg-6 col-md-12 col-6 mb-6">
-                  <div class="card h-100">
-                    <div class="card-body">
-                      <div class="card-title d-flex align-items-start justify-content-between mb-4">
-                        <div class="avatar flex-shrink-0">
-                          <img
-                            src="/static/assets/img/icons/unicons/chart-success.png"
-                            alt="chart success"
-                            class="rounded" />
-                        </div>
-                        <div class="dropdown">
-                          <button
-                            class="btn p-0"
-                            type="button"
-                            id="cardOpt3"
-                            data-bs-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false">
-                            <i class="bx bx-dots-vertical-rounded text-muted"></i>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                            <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                            <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                          </div>
+            <div class="row col-12 grid-margin">
+              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">$12.34</h3>
+                          <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
                         </div>
                       </div>
-                      <p class="mb-1">Profit</p>
-                      <h4 class="card-title mb-3">$12,628</h4>
-                      <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
+                      <div class="col-3">
+                        <div class="icon icon-box-success">
+                          <span class="mdi mdi-arrow-top-right icon-item"></span>
+                        </div>
+                      </div>
                     </div>
+                    <h6 class="text-muted font-weight-normal">Potential growth</h6>
                   </div>
                 </div>
-                <div class="col-lg-6 col-md-12 col-6 mb-6">
-                  <div class="card h-100">
-                    <div class="card-body">
-                      <div class="card-title d-flex align-items-start justify-content-between mb-4">
-                        <div class="avatar flex-shrink-0">
-                          <img
-                            src="/static/assets/img/icons/unicons/wallet-info.png"
-                            alt="wallet info"
-                            class="rounded" />
-                        </div>
-                        <div class="dropdown">
-                          <button
-                            class="btn p-0"
-                            type="button"
-                            id="cardOpt6"
-                            data-bs-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false">
-                            <i class="bx bx-dots-vertical-rounded text-muted"></i>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt6">
-                            <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                            <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                          </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">$17.34</h3>
+                          <p class="text-success ml-2 mb-0 font-weight-medium">+11%</p>
                         </div>
                       </div>
-                      <p class="mb-1">Sales</p>
-                      <h4 class="card-title mb-3">$4,679</h4>
-                      <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small>
+                      <div class="col-3">
+                        <div class="icon icon-box-success">
+                          <span class="mdi mdi-arrow-top-right icon-item"></span>
+                        </div>
+                      </div>
                     </div>
+                    <h6 class="text-muted font-weight-normal">Revenue current</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">$12.34</h3>
+                          <p class="text-danger ml-2 mb-0 font-weight-medium">-2.4%</p>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="icon icon-box-danger">
+                          <span class="mdi mdi-arrow-bottom-left icon-item"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <h6 class="text-muted font-weight-normal">Daily Income</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">$31.53</h3>
+                          <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="icon icon-box-success">
+                          <span class="mdi mdi-arrow-top-right icon-item"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <h6 class="text-muted font-weight-normal">Expense current</h6>
                   </div>
                 </div>
               </div>
             </div>
-
-            <div class="col-12 ">
+            <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Order Status</h4>
@@ -665,12 +737,14 @@
                       <tbody>
                         <tr>
                           <td>
-                            <div class="form-check form-check-muted m-0">
-                              <label class="form-check-label"><input type="checkbox" class="form-check-input" /></label>
-                            </div>
-                          </td>
+                                <div class="form-check form-check-muted m-0">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" />
+                                    </label>
+                                </div>
+                            </td>
                           <td>
-                            <img src="/static/assets/images/faces/face1.jpg" alt="image" />
+                            <img src="/static/ui-assets/images/faces/face1.jpg" alt="image" />
                             <span class="pl-2">Henry Klein</span>
                           </td>
                           <td>02312</td>
@@ -684,12 +758,14 @@
                         </tr>
                         <tr>
                           <td>
-                            <div class="form-check form-check-muted m-0">
-                              <label class="form-check-label"><input type="checkbox" class="form-check-input" /></label>
-                            </div>
-                          </td>
+                                <div class="form-check form-check-muted m-0">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" />
+                                    </label>
+                                </div>
+                            </td>
                           <td>
-                            <img src="/static/assets/images/faces/face2.jpg" alt="image" />
+                            <img src="/static/ui-assets/images/faces/face2.jpg" alt="image" />
                             <span class="pl-2">Estella Bryan</span>
                           </td>
                           <td>02312</td>
@@ -703,12 +779,14 @@
                         </tr>
                         <tr>
                           <td>
-                            <div class="form-check form-check-muted m-0">
-                              <label class="form-check-label"><input type="checkbox" class="form-check-input" /></label>
-                            </div>
-                          </td>
+                                <div class="form-check form-check-muted m-0">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" />
+                                    </label>
+                                </div>
+                            </td>
                           <td>
-                            <img src="/static/assets/images/faces/face5.jpg" alt="image" />
+                            <img src="/static/ui-assets/images/faces/face5.jpg" alt="image" />
                             <span class="pl-2">Lucy Abbott</span>
                           </td>
                           <td>02312</td>
@@ -722,12 +800,14 @@
                         </tr>
                         <tr>
                           <td>
-                            <div class="form-check form-check-muted m-0">
-                              <label class="form-check-label"><input type="checkbox" class="form-check-input" /></label>
-                            </div>
-                          </td>
+                                <div class="form-check form-check-muted m-0">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" />
+                                    </label>
+                                </div>
+                            </td>
                           <td>
-                            <img src="/static/assets/images/faces/face3.jpg" alt="image" />
+                            <img src="/static/ui-assets/images/faces/face3.jpg" alt="image" />
                             <span class="pl-2">Peter Gill</span>
                           </td>
                           <td>02312</td>
@@ -741,12 +821,14 @@
                         </tr>
                         <tr>
                           <td>
-                            <div class="form-check form-check-muted m-0">
-                              <label class="form-check-label"><input type="checkbox" class="form-check-input" /></label>
-                            </div>
-                          </td>
+                                <div class="form-check form-check-muted m-0">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" />
+                                    </label>
+                                </div>
+                            </td>
                           <td>
-                            <img src="/static/assets/images/faces/face4.jpg" alt="image" />
+                            <img src="/static/ui-assets/images/faces/face4.jpg" alt="image" />
                             <span class="pl-2">Sallie Reyes</span>
                           </td>
                           <td>02312</td>
@@ -764,8 +846,7 @@
                 </div>
               </div>
             </div>
-
-          </div>
+          {% comment %} </div> {% endcomment %}
         </div>
       </div>
       <!-- End Bordered Tabs Justified -->
