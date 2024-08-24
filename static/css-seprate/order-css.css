@@ -1,0 +1,80 @@
+/* Style the filter input fields and dropdowns */
+#orderTable thead input[type="text"],
+#orderTable thead select {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+
+
+/* Custom styling for the table headers */
+#orderTable thead th {
+    background-color: #3a57e8;
+    color: white;
+    /* text-align: center;
+    padding: 10px; */
+}
+
+/* Ensure that the ordering arrows (DataTables) are not hidden */
+#orderTable thead th.sorting,
+#orderTable thead th.sorting_asc,
+#orderTable thead th.sorting_desc {
+    background-color: #3a57e8;
+    color: white;
+}
+
+/* Optional: add hover effects to rows */
+#orderTable tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+
+      .swiper-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .card-body {
+        text-align: center;
+      }
+      
+      .card-body img {
+        width: 100%; /* Set the image width to 100% of the container */
+        max-width: 300px; /* Set a max width for the image */
+        height: auto; /* Ensure the height adjusts automatically to maintain aspect ratio */
+        max-height: 200px; /* Set a max height for the image */
+        object-fit: cover; /* Ensure the image covers the container without stretching */
+        border-radius: 8px; /* Optional: Add rounded corners to the image */
+      }
+      
+      /* Highlight selected row */
+      .selected {
+        background-color: #f5f5f5;
+      }
+      
+      /* Ensure checkboxes are aligned properly */
+      .form-check-input {
+        margin: 0;
+      }
+      
+      /* Optional: Style for the badge */
+      .badge-outline-success {
+        border-color: #28a745;
+        color: #28a745;
+      }
+      
+      .badge-outline-warning {
+        border-color: #ffc107;
+        color: #ffc107;
+      }
+      
+      .badge-outline-danger {
+        border-color: #dc3545;
+        color: #dc3545;
+      }
+   

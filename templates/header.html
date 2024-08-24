@@ -26,88 +26,22 @@
     <!-- Customizer Css -->
     <link rel="stylesheet" href="/static/assets/css/customizer.min.css" />
 
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    
     <!-- RTL Css -->
     <link rel="stylesheet" href="/static/assets/css/rtl.min.css" />
-    <style>
-      #orderTable thead input[type="text"],
-      #orderTable thead select {
-          width: 100%;
-          padding: 5px;
-          box-sizing: border-box;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          font-size: 0.9em;
-      }
-    /* Align the filter input fields with the table */
-    #orderTable thead tr:nth-child(2) th {
-        padding: 4px 8px;
-        background-color: #f8f9fa;
-    }
+        {% comment %} <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" /> {% endcomment %}
 
-    /* Add some space between filter inputs and table headers */
-    #orderTable thead th {
-        vertical-align: middle;
-    }
+        {% if request.path == '/menu/' %}<link rel="stylesheet" href="/static/css-seprate/menu-css.css" />
+        
+      {% endif %}
 
-    /* Custom styling for the table headers */
-    #orderTable thead th {
-        background-color: #343a40;
-        color: white;
-        text-align: center;
-        padding: 10px;
-    }
+        {% if request.path == '/order/' %}<link rel="stylesheet" href="/static/css-seprate/order-css.css" />{% endif %}
 
-    /* Optional: add hover effects to rows */
-    #orderTable tbody tr:hover {
-        background-color: #f1f1f1;
-    }
 
-      .swiper-slide {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      
-      .card-body {
-        text-align: center;
-      }
-      
-      .card-body img {
-        width: 100%; /* Set the image width to 100% of the container */
-        max-width: 300px; /* Set a max width for the image */
-        height: auto; /* Ensure the height adjusts automatically to maintain aspect ratio */
-        max-height: 200px; /* Set a max height for the image */
-        object-fit: cover; /* Ensure the image covers the container without stretching */
-        border-radius: 8px; /* Optional: Add rounded corners to the image */
-      }
-      
-      /* Highlight selected row */
-      .selected {
-        background-color: #f5f5f5;
-      }
-      
-      /* Ensure checkboxes are aligned properly */
-      .form-check-input {
-        margin: 0;
-      }
-      
-      /* Optional: Style for the badge */
-      .badge-outline-success {
-        border-color: #28a745;
-        color: #28a745;
-      }
-      
-      .badge-outline-warning {
-        border-color: #ffc107;
-        color: #ffc107;
-      }
-      
-      .badge-outline-danger {
-        border-color: #dc3545;
-        color: #dc3545;
-      }
-    </style>
-    {% comment %} <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" /> {% endcomment %}
   </head>
   <body class="">
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" data-bs-scroll="true" data-bs-backdrop="true" aria-labelledby="offcanvasExampleLabel">

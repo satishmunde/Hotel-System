@@ -33,8 +33,32 @@
 <script src="/static/assets/js/hope-ui.js" defer></script>
 <!-- App Script -->
 <script src="/static/ui-assets/js/data-table.js" ></script>
+{% if request.path == '/menu/' %}<script src="/static/data-table-js/menu-datatable.js" >
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<script src="/static/data-table-js/menu-datatable.js" ></script>
+
+{% comment %} 
+		<script src="/static/assets/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+		<script src="/static/assets/vendor/datatables/js/dataTables.responsive.min.js"></script>
+		<script src="/static/assets/vendor/datatables/js/responsive.bootstrap4.min.js"></script>
+		<!-- buttons for Export datatable -->
+		<script src="/static/assets/vendor/datatables/js/dataTables.buttons.min.js"></script>
+		<script src="/static/assets/vendor/datatables/js/buttons.bootstrap4.min.js"></script>
+		<script src="/static/assets/vendor/datatables/js/buttons.print.min.js"></script>
+		<script src="/static/assets/vendor/datatables/js/buttons.html5.min.js"></script>
+		<script src="/static/assets/vendor/datatables/js/buttons.flash.min.js"></script>
+		<script src="/static/assets/vendor/datatables/js/pdfmake.min.js"></script>
+		<script src="/static/assets/vendor/datatables/js/vfs_fonts.js"></script>
+		<script src="/static/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
+
+		
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.0.1/b-colvis-2.0.1/b-html5-2.0.1/cr-1.5.4/datatables.min.js"></script> {% endcomment %}
+</script>{% endif %}
+
+{% if request.path == '/order/' %}<script src="/static/data-table-js/order-datatable.js" ></script>{% endif %}
+
+
 
 <script>
     function handleLogout() {
