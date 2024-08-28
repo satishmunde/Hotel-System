@@ -1,21 +1,60 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from djoser.serializers import UserCreateSerializer as BaseUserCreateSerializer 
 from djoser.serializers import UserSerializer as BaseUserSerializer
 from rest_framework import serializers
-from .models import LoginSystem
+from .models import LoginSystem,Company
 from employees.models import Document,EmployeePosition
 from employees.serializers import DocumentSerializer,EmployeePositionSerializer
-
 import re
-
-
-
-
 from django.contrib.auth.models import Group  # Example import
+from .models import Company, Subscription
+
+class SubscriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subscription
+        fields = '__all__'
+    
+    def validate_duration_months(self, value):
+        if value <= 0:
+            raise serializers.ValidationError("Duration must be a positive integer.")
+        return value
+
+    def validate_price(self, value):
+        if value <= 0:
+            raise serializers.ValidationError("Price must be a positive number.")
+        return value
+
+class CompanySerializer(serializers.ModelSerializer):
+    current_subscription = SubscriptionSerializer()
+    class Meta:
+        model = Company
+        fields = '__all__'
+    
+    def validate_email(self, value):
+        if Company.objects.exclude(pk=self.instance.pk).filter(email=value).exists():
+            raise serializers.ValidationError("A company with this email already exists.")
+        return value
+
+    def validate_contact_number(self, value):
+        if not value.isdigit():
+            raise serializers.ValidationError("Contact number must contain only digits.")
+        if len(value) < 10:
+            raise serializers.ValidationError("Contact number must be at least 10 digits long.")
+        return value
+
+    def validate(self, data):
+        # Example validation to check if subscription is active
+        if data.get('subscription_end_date') and data.get('subscription_end_date') <= timezone.now().date():
+            data['is_subscription_active'] = False
+        return data
+
+
 
 class LoginSystemSerializer(BaseUserSerializer,serializers.ModelSerializer):
     documents = serializers.SerializerMethodField()
     employee_position = serializers.SerializerMethodField()
+    company = serializers.SerializerMethodField()
+
     
     groups = serializers.PrimaryKeyRelatedField(queryset=Group.objects.all(), many=True, required=False)  # Example
 
@@ -26,7 +65,7 @@ class LoginSystemSerializer(BaseUserSerializer,serializers.ModelSerializer):
         fields_for_post = [field.name for field in LoginSystem._meta.fields if field.name not in [
             'emp_id', 'last_updated', 'created_at', 'password', 'access_token', 'refresh_token']]
         fields_for_get = [field.name for field in LoginSystem._meta.fields if field.name not in [
-            'password']] + ['documents','employee_position']
+            'password']] + ['documents','employee_position',]
         fields_for_put = [field.name for field in LoginSystem._meta.fields if field.name not in [
             'last_updated', 'created_at', 'password', 'last_login', 'is_superuser', 'is_staff', 'date_joined', 
             'access_token', 'refresh_token', 'is_active', 'is_doc_uploaded']]
@@ -46,9 +85,6 @@ class LoginSystemSerializer(BaseUserSerializer,serializers.ModelSerializer):
             
             # Make `password` field optional for PUT requests
             if request_method == 'PUT':
-
-                # self.fields['password'].required = False
-                # Make fields optional for partial updates
                 for field_name in fields_to_keep:
                     if field_name in self.fields:
                         self.fields[field_name].required = False
@@ -61,6 +97,11 @@ class LoginSystemSerializer(BaseUserSerializer,serializers.ModelSerializer):
         documents = Document.objects.filter(employee=obj)
         return DocumentSerializer(documents, many=True).data
     
+    def get_company(self, obj):
+        company = Company.objects.filter(company_id=obj.company.company_id)
+        return CompanySerializer(company, many=True).data
+    
+
     def get_employee_position(self, obj):
         employee_position = EmployeePosition.objects.filter(employee=obj)
         return EmployeePositionSerializer(employee_position, many=True).data
@@ -338,6 +379,4 @@ class UserCreateSerializer(BaseUserCreateSerializer):
         if password:
             user.set_password(password)  # Hash the password
             user.save()
-        
-        return user
 

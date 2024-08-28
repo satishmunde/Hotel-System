@@ -1,11 +1,11 @@
-# # in your project's urls.py (e.g., myproject/urls.py)
-# from django.urls import path, include
-# from rest_framework.routers import DefaultRouter
-# from .views import LoginSystemViewSet
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import CompanyViewSet, SubscriptionViewSet
 
-# router = DefaultRouter()
-# router.register(r'emps', LoginSystemViewSet)
+router = DefaultRouter()
+router.register(r'companies', CompanyViewSet)
+router.register(r'subscriptions', SubscriptionViewSet)
 
-# urlpatterns = [
-#     path('', include(router.urls)),
-# ]
+urlpatterns = [
+    path('', include(router.urls)),
+]

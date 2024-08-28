@@ -2,8 +2,10 @@ from django.db import models
 from orders.models import Order
 from django.utils import timezone
 from crm.models import Customer
+from core.models import Company
 
 class Bill(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
     bill_id = models.CharField(primary_key=True, max_length=18, blank=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     customer_id =models.ForeignKey(Customer, on_delete=models.CASCADE)
@@ -34,6 +36,7 @@ class Payment(models.Model):
         ('bank_transfer', 'Bank Transfer'),
         ('cash', 'Cash'),
     ]
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
 
     payment_id = models.CharField(primary_key=True, max_length=13, blank=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)

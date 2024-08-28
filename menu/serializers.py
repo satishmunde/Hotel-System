@@ -21,49 +21,66 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class MenuItemSerializer(serializers.ModelSerializer):
-    category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())  # For writable category field
+    category = serializers.SerializerMethodField()
+
+    def get_category(self, obj):
+        print('------------------------')
+        print(obj.category)
+        return obj.category.name  # Returns the name of the category
 
     def validate_name(self, value):
-        # Clean the data
         value = value.strip()
         if not value:
             raise serializers.ValidationError("Menu item name is required.")
         if len(value) > 200:
             raise serializers.ValidationError("Menu item name must be at most 200 characters long.")
-        if MenuItem.objects.filter(name=value).exists():
-            raise serializers.ValidationError("A menu item with this name already exists.")
         return value
 
     def validate_price(self, value):
-        # Validate that price is a positive number
         if value <= 0:
             raise serializers.ValidationError("Price must be a positive number.")
         return value
+    
+    def validate_availability(self, value):
+        if value < 0:
+            raise serializers.ValidationError("Availability must be a positive number.")
+        return value
 
     def validate_image(self, value):
-        # Validate the image field if necessary
         if value:
-            # Check image file size (example: limit to 5MB)
             if value.size > 5 * 1024 * 1024:
                 raise serializers.ValidationError("Image file size must be less than 5MB.")
-            # Check file extension
             if not value.name.endswith(('.jpg', '.jpeg', '.png')):
                 raise serializers.ValidationError("Image must be in JPG, JPEG, or PNG format.")
         return value
 
     def validate(self, data):
-        """
-        Check if a MenuItem with the same name and category already exists.
-        """
+        print(data)
+        print(data.get('category'))
         category = data.get('category')
         name = data.get('name')
 
         if MenuItem.objects.filter(name=name, category=category).exists():
             raise serializers.ValidationError("A menu item with this name already exists in the selected category.")
+        
+        # Inject company from the request user
+        data['company'] = self.context['request'].user.company
 
         return data
 
+    def create(self, validated_data):
+        
+        print(validated_data)
+        # Create a new MenuItem with the validated data
+        validated_data['company'] = self.context['request'].user.company
+        return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        # Update the MenuItem with the validated data
+        validated_data['company'] = self.context['request'].user.company
+        return super().update(instance, validated_data)
+
     class Meta:
         model = MenuItem
-        fields = '__all__'
-        read_only_fields = ['is_active']
+        fields = ['id', 'name', 'description', 'category', 'price', 'image', 'availability', 'company']
+        read_only_fields = ['is_active', 'company']

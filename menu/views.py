@@ -1,4 +1,3 @@
-# viewsets.py
 from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
@@ -13,10 +12,14 @@ class CategoryViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_class = CategoryFilter
 
+    def get_queryset(self):
+        user_company = self.request.user.company
+        return super().get_queryset().filter(company=user_company)
+
     def list(self, request):
-        queryset = self.filter_queryset(self.get_queryset()).filter()
+        queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data) 
 
     def retrieve(self, request, pk=None):
         instance = self.get_object()
@@ -49,8 +52,12 @@ class MenuItemViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_class = MenuItemFilter
 
+    def get_queryset(self):
+        user_company = self.request.user.company
+        return super().get_queryset().filter(company=user_company, is_active=True)
+
     def list(self, request):
-        queryset = self.filter_queryset(self.get_queryset()).filter()
+        queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 

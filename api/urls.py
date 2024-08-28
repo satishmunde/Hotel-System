@@ -36,6 +36,10 @@ urlpatterns = [
     path('token/', include('token_system.urls')),
     path('billing/', include('billing.urls')),
     path('inventory/', include('inventory.urls')),
+    path('users/', include('core.urls')),
+    
+    
+    
     
 
 

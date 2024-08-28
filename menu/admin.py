@@ -8,7 +8,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(MenuItem)
 class MenuItemAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'price')
+    list_display = ('name', 'category', 'price','availability')
     list_filter = ('category',)
     search_fields = ('name', 'description')
 

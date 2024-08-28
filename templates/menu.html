@@ -62,7 +62,16 @@ data-aos-delay="700">
                       </select>
                     </th>
                    
-                    <th></th>
+                    <th>
+                      <button type="button" 
+                              onclick="loadCategories('itemCategory');" 
+                              class="btn btn-light" 
+                              data-bs-toggle="modal" 
+                              data-bs-target="#addItemModal">
+                        <i class="fa fa-plus add-icon" title="View" style="cursor: pointer; color:black;"></i>
+                      </button>
+                    </th>
+                    
                   </tr>
                 </thead>
                 <tbody id="menuTableBody" class="table-group-divider">
@@ -81,9 +90,61 @@ data-aos-delay="700">
     
   </div>
 
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="addItemModalLabel">Add New Item</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form id="addItemForm">
+                      <div class="mb-3">
+                          <label for="itemName" class="form-label">Item Name</label>
+                          <input type="text" class="form-control" id="itemName" name="itemName" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="itemDescription" class="form-label">Item Description</label>
+                          <textarea class="form-control" id="itemDescription" name="itemDescription" rows="3" required></textarea>
+                      </div>
+                      <div class="mb-3">
+                          <label for="itemCategory" class="form-label">Category</label>
+                          <select class="form-select" id="itemCategory" name="category" required>
+                              <!-- Options will be populated dynamically or manually -->
+                              <!-- Example: -->
+                            
+                          </select>
+                      </div>
+                      <div class="mb-3">
+                          <label for="itemPrice" class="form-label">Price</label>
+                          <input type="number" step="0.01" class="form-control" id="itemPrice" name="price" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="itemImage" class="form-label">Image</label>
+                          <input type="file" class="form-control" id="itemImage" name="image">
+                      </div>
+                      <div class="mb-3">
+                          <label for="itemAvailability" class="form-label">Availability</label>
+                          <input type="number" class="form-control" id="itemAvailability" name="availability" required>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+
+
 <!-- Edit Modal -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
           <div class="modal-header">
               <h5 class="modal-title" id="editModalLabel">Edit Item</h5>
@@ -92,8 +153,54 @@ data-aos-delay="700">
               </button>
           </div>
           <div class="modal-body">
-              <form id="editForm">
-                  <input type="text" id="editItemName" class="form-control" />
+              <form id="editForm" class="row">
+                  <!-- Name Field -->
+                  <div class="form-group col-6">
+                      <label for="editItemName">Name</label>
+                      <input type="text" id="editItemName" class="form-control" required />
+                  </div>
+
+                  <!-- Description Field -->
+                  <div class="form-group col-6">
+                      <label for="editItemDescription">Description</label>
+                      <textarea id="editItemDescription" class="form-control" rows="3" required></textarea>
+                  </div>
+
+                  <!-- Category Field -->
+                  <div class="form-group col-6">
+                      <label for="editItemCategory">Category</label>
+                      <select id="editItemCategory" class="form-control" required>
+                          <!-- Options will be populated dynamically -->
+                      </select>
+                  </div>
+
+                  <!-- Price Field -->
+                  <div class="form-group col-6">
+                      <label for="editItemPrice">Price</label>
+                      <input type="number" id="editItemPrice" class="form-control" step="0.01" min="0" required />
+                  </div>
+
+                  <!-- Image Display -->
+                  <div class="form-group col-6">
+                      <label for="editItemImage">Current Image</label>
+                      <div class="mb-2">
+                          <img id="currentItemImage" src="" alt="Current Image" class="img-fluid" style="max-height: 200px;" />
+                      </div>
+                  </div>
+
+                  <!-- Update Image -->
+                  <div class="form-group col-6">
+                      <label for="editItemImage">Update Image</label>
+                      <input type="file" id="editItemImage" class="form-control-file" accept="image/*" />
+                      <label for="uploadedItemImage" class="d-block mt-2">Uploaded Image Preview</label>
+                      <img id="uploadedItemImage" src="" alt="Uploaded Image" class="img-fluid mt-2" style="max-height: 200px; display: none;" />
+                  </div>
+
+                  <!-- Availability Field -->
+                  <div class="form-group col-6">
+                      <label for="editItemAvailability">Availability</label>
+                      <input type="number" id="editItemAvailability" class="form-control" min="0" required />
+                  </div>
               </form>
           </div>
           <div class="modal-footer">
@@ -104,46 +211,50 @@ data-aos-delay="700">
   </div>
 </div>
 
-<!-- Delete Confirmation Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="deleteModalLabel">Delete Confirmation</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <div class="modal-body">
-              Are you sure you want to delete this item?
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-              <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
-          </div>
-      </div>
-  </div>
-</div>
+
+
+
 
 <!-- View Modal -->
 <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="viewModalLabel">View Item</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <div class="modal-body">
-              <p id="viewDetails"></p>
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #4e73df; color: white;">
+        <h5 class="modal-title" id="viewModalLabel">View Item</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+      <div class="modal-body" style="background-color: #f8f9fc;">
+        <div class="card shadow-sm">
+          <div class="card-body p-0">
+            <img id="itemImage" class="card-img-top" alt="Item Image" style="border-radius: 10px;">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title" id="itemName" style="color: #1cc88a;"></h5>
+            <p class="card-text" id="itemDescription" style="color: #858796;"></p>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item" style="background-color: #e3e6f0; color: #5a5c69;">
+                <strong>Category:</strong> <span id="itemCategory"></span>
+              </li>
+              <li class="list-group-item" style="background-color: #e3e6f0; color: #5a5c69;">
+                <strong>Price:</strong> ₹<span id="itemPrice"></span>
+              </li>
+              <li class="list-group-item" style="background-color: #e3e6f0; color: #5a5c69;">
+                <strong>Availability:</strong> <span id="itemAvailability"></span> units
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="background-color: #f8f9fc;">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>
+
+
 
 
 {% endblock %}
