@@ -19,7 +19,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     def list(self, request):
         queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data) 
+        return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
         instance = self.get_object()
@@ -44,6 +44,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
         instance = self.get_object()
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class MenuItemViewSet(viewsets.ModelViewSet):
     queryset = MenuItem.objects.all()

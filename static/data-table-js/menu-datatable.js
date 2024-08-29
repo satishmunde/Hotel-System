@@ -270,12 +270,13 @@ function populateTable(data) {
 
 
 document.getElementById('addItemForm').addEventListener('submit', function (event) {
-    loadCategories('itemCategory');
     event.preventDefault(); // Prevent the form from submitting the default way
 
     // Collect form data
     const formData = new FormData(this); // FormData automatically handles file inputs
-    console.log(formData.get('category'))
+
+    // Collect form data
+
     // Append necessary fields to the formData object
     formData.append('name', formData.get('itemName'));
     formData.append('description', formData.get('itemDescription'));
@@ -289,45 +290,48 @@ document.getElementById('addItemForm').addEventListener('submit', function (even
         method: 'POST',
         headers: {
             'Authorization': `JWT ${jwtToken}`
+            // Note: Do not set 'Content-Type': 'multipart/form-data'; it is automatically set by FormData
         },
         body: formData // No need to stringify FormData; it handles files correctly
     })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            if (data.success) {
-                // Show success alert
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'Item has been added successfully.',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                }).then(() => {
-                    // Close modal after alert is confirmed
-                    document.getElementById('addItemModal').querySelector('.btn-close').click();
-                    // Optionally, refresh the data on the page or reset the form
-                    document.getElementById('addItemForm').reset();
-                });
-            } else {
-                // Handle the case where the response indicates an error
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'There was a problem adding the item. Please try again.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
+        .then(response => {
+            // Check if the response was successful
+            if (!response.ok) {
+                // If response is not OK, handle it as an error
+                return response.json().then(errorData => {
+                    console.log(errorData);
+                    throw new Error(errorData.non_field_errors || 'Something went wrong');
                 });
             }
+            return response.json(); // Parse the JSON response if successful
+        })
+        .then(data => {
+            // Handle successful response
+            Swal.fire({
+                title: 'Success!',
+                text: 'Item has been added successfully.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                // Close modal after alert is confirmed
+                document.getElementById('addItemModal').querySelector('.btn-close').click();
+                // Optionally, refresh the data on the page or reset the form
+                document.getElementById('addItemForm').reset();
+                $('#menuTable').DataTable().destroy(); // Destroy DataTable to refresh
+                fetchDataFromAPI();
+            });
         })
         .catch(error => {
-            console.error('Error:', error);
-            // Show error alert
+            console.error('Error:', error.message);
+            // Show error alert for unexpected errors
             Swal.fire({
                 title: 'Error!',
-                text: 'An unexpected error occurred. Please try again.',
+                text: error.message || 'An unexpected error occurred. Please try again.',
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
         });
+
 });
 
 

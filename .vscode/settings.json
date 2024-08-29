@@ -1,3 +1,5 @@
 {
-  "DockerRun.DisableAutoGenerateConfig": true
+  "DockerRun.DisableAutoGenerateConfig": true,
+  "editor.experimental.useGpuRasterization": true
+
 }

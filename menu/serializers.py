@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Category,MenuItem
+from django.db import models
 
 class CategorySerializer(serializers.ModelSerializer):
     def validate_name(self, value):
@@ -21,12 +22,8 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class MenuItemSerializer(serializers.ModelSerializer):
-    category = serializers.SerializerMethodField()
-
-    def get_category(self, obj):
-        print('------------------------')
-        print(obj.category)
-        return obj.category.name  # Returns the name of the category
+    # Use PrimaryKeyRelatedField for category
+    category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
 
     def validate_name(self, value):
         value = value.strip()
@@ -55,22 +52,20 @@ class MenuItemSerializer(serializers.ModelSerializer):
         return value
 
     def validate(self, data):
-        print(data)
-        print(data.get('category'))
         category = data.get('category')
         name = data.get('name')
-
-        if MenuItem.objects.filter(name=name, category=category).exists():
-            raise serializers.ValidationError("A menu item with this name already exists in the selected category.")
+        company = self.context['request'].user.company
+        
+        # Ensure that the combination of name and company is unique
+        if MenuItem.objects.filter(name=name, category=category, company=company).exists():
+            raise serializers.ValidationError("A menu item with this name already exists in the selected category for this company.")
         
         # Inject company from the request user
-        data['company'] = self.context['request'].user.company
+        data['company'] = company
 
         return data
 
     def create(self, validated_data):
-        
-        print(validated_data)
         # Create a new MenuItem with the validated data
         validated_data['company'] = self.context['request'].user.company
         return super().create(validated_data)
@@ -84,3 +79,6 @@ class MenuItemSerializer(serializers.ModelSerializer):
         model = MenuItem
         fields = ['id', 'name', 'description', 'category', 'price', 'image', 'availability', 'company']
         read_only_fields = ['is_active', 'company']
+        constraints = [
+            models.UniqueConstraint(fields=['name', 'category', 'company'], name='unique_menu_item')
+        ]
