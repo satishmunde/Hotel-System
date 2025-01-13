@@ -97,7 +97,7 @@ class LoginSystem(AbstractUser):
     first_name = models.CharField(max_length=100, null=False)
     last_name = models.CharField(max_length=100, null=False)
     email = models.EmailField(unique=True)
-    date_of_birth = models.DateField()
+    date_of_birth = models.DateField(blank=True, null=True)
     phone_number = models.CharField(max_length=10)
     address = models.CharField(max_length=255,)
     aadhar_number = models.CharField(max_length=20,)
@@ -112,11 +112,11 @@ class LoginSystem(AbstractUser):
     is_doc_uploaded = models.BooleanField(default=False)
     
         # Foreign Key to Company model
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='employees')
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='employees',blank=True, null=True)
 
     
     
-    USERNAME_FIELD = 'emp_id'
+    # USERNAME_FIELD = 'emp_id'
     
     
     def generate_emp_id(self):
